@@ -404,8 +404,8 @@ public class FXMLDocumentController implements Initializable {
             }            
             if(pass){
                 errorMessage3.setVisible(false);
-                GlobalContext.doStratifiedSampling(inp);
-                ObservableList index = FXCollections.observableArrayList(GlobalContext.indexArray);
+                GlobalContext.doStratifiedSampling(inp);                
+                ObservableList index = FXCollections.observableArrayList(GlobalContext.stratifiedIndexArray);
                 ObservableList sampleItems = FXCollections.observableArrayList(GlobalContext.sampleArray);
                 finalFrameIndexListView.setItems(index);
                 finalFrameSamplesListView.setItems(sampleItems);
@@ -444,17 +444,17 @@ public class FXMLDocumentController implements Initializable {
                 finalFrameSamplesListView.setItems(sampleItems);
                 errorMessage3.setVisible(false);
                 proceed3 = true;
+            }                                    
+        }
+        Node n1 = finalFrameIndexListView.lookup(".scroll-bar");
+        if (n1 instanceof ScrollBar) {
+            final ScrollBar bar1 = (ScrollBar) n1;
+            Node n2 = finalFrameSamplesListView.lookup(".scroll-bar");
+            if (n2 instanceof ScrollBar) {
+                final ScrollBar bar2 = (ScrollBar) n2;
+                bar1.valueProperty().bindBidirectional(bar2.valueProperty());                    
             }
-            Node n1 = finalFrameIndexListView.lookup(".scroll-bar");
-            if (n1 instanceof ScrollBar) {
-                final ScrollBar bar1 = (ScrollBar) n1;
-                Node n2 = finalFrameSamplesListView.lookup(".scroll-bar");
-                if (n2 instanceof ScrollBar) {
-                    final ScrollBar bar2 = (ScrollBar) n2;
-                    bar1.valueProperty().bindBidirectional(bar2.valueProperty());                    
-                }
-            }                        
-        }        
+        }
         if(proceed3){
 //            sample.setEditable(false);
             returnToHome.setVisible(true);

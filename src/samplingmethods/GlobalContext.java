@@ -32,6 +32,7 @@ public class GlobalContext {
     static boolean[] tracker;
     static String[] sampleArray;
     static Integer[] indexArray;
+    static String[] stratifiedIndexArray;
     
     
     public static GlobalContext getInstance() {
@@ -96,7 +97,7 @@ public class GlobalContext {
         } else {
             percentage = Float.parseFloat(inp);
         }
-        
+                        
         Queue<String>[] l = new LinkedList[N];
         
         counter = 0;
@@ -124,36 +125,48 @@ public class GlobalContext {
         percentage /= 100;
         
         int sampleSizePerStratum;        
+        int a = 0;
 
+        sampleArray = new String[N];
+        stratifiedIndexArray = new String[N];
+        for(int i = 0; i < N; i++){
+            stratifiedIndexArray[i] = "";
+            sampleArray[i] = "";
+        }
         for (int i = 0; i < N; i++) {
             if (l[i] != null) {
+                boolean trigger = false;
                 ans += String.format("Stratum %d (%d = total number of samples in Stratum %d){ ", i + 1, l[i].size()-1, i+1);
-
+                stratifiedIndexArray[a] = String.format("Stratum %d (total = %d): ", i + 1, l[i].size()-1);
                 String item = l[i].peek();
                 l[i].remove();
 
                 sampleSizePerStratum = (int) (Math.ceil((double) (percentage * l[i].size())));                
                 for (int j = 0; j < sampleSizePerStratum; j++) {
-                    int k = 0, rTmp = r.nextInt(l[i].size()) + 1;
-                    
-                    
+                    int k = 0, rTmp = r.nextInt(l[i].size()) + 1;                                        
                     do {
                         String t = l[i].peek();
                         l[i].remove();
                         l[i].add(t);
                         k++;
                     } while (k < rTmp);
-
+                    
+                    int index = Integer.parseInt(l[i].peek());
                     if (option == 1) {
                         ans += String.format((j + 1 != sampleSizePerStratum) ? "Index %d : Item %s\n " : "Index %d : Item %s } \n", Integer.parseInt(l[i].peek()) + 1, item);
+                        stratifiedIndexArray[a] += (!trigger) ? "\t" + Integer.toString(index+1) : "\t\t\t\t\t" + Integer.toString(index+1);
+                        sampleArray[a++] = item;
+                        trigger = true;
                     } else {
                         ans += String.format((j + 1 != sampleSizePerStratum) ? "Index %d : Item '%s'\n, " : "Index %d : Item '%c' } \n", Integer.parseInt(l[i].peek()) + 1, (char) Integer.parseInt(item));
+                        stratifiedIndexArray[a] += (!trigger) ? "\t" + Integer.toString(index+1) : "\t\t\t\t\t" + Integer.toString(index+1);
+                        sampleArray[a++] = item;
                     }
-
                     l[i].remove();
                 }
             }
         }
+               
         return ans;
     }
     

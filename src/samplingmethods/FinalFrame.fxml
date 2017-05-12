@@ -17,9 +17,9 @@
       <Button fx:id="generateSample" layoutX="268.0" layoutY="99.0" mnemonicParsing="false" onAction="#enterSample" text="Generate" />
       <Button fx:id="returnToHome" layoutX="272.0" layoutY="365.0" mnemonicParsing="false" onAction="#returnHome" text="Main Menu" visible="false" />
       <Label fx:id="errorMessage3" layoutX="346.0" layoutY="102.0" text="Input Sampling Size " textFill="#f81c1c" visible="false" />
-      <ListView fx:id="finalFrameIndexListView" layoutX="200.0" layoutY="152.0" prefHeight="200.0" prefWidth="99.0" />
-      <ListView fx:id="finalFrameSamplesListView" layoutX="300.0" layoutY="152.0" prefHeight="200.0" prefWidth="99.0" />
-      <Label layoutX="236.0" layoutY="135.0" text="Index" />
-      <Label layoutX="332.0" layoutY="135.0" text="Item" />
+      <ListView fx:id="finalFrameIndexListView" layoutX="140.0" layoutY="158.0" prefHeight="204.0" prefWidth="202.0" />
+      <ListView fx:id="finalFrameSamplesListView" layoutX="344.0" layoutY="158.0" prefHeight="204.0" prefWidth="99.0" />
+      <Label layoutX="286.0" layoutY="135.0" text="Index" />
+      <Label layoutX="381.0" layoutY="135.0" text="Item" />
    </children>
 </AnchorPane>
