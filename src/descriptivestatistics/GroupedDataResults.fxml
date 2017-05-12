@@ -39,5 +39,6 @@
          <effect>
             <ColorAdjust hue="-0.79" saturation="0.36" />
          </effect></Button>
+      <Label fx:id="errorMessage" layoutX="153.0" layoutY="349.0" prefHeight="33.0" prefWidth="274.0" textFill="RED" wrapText="true" />
    </children>
 </AnchorPane>

@@ -16,6 +16,9 @@ import javafx.stage.Stage;
  *
  * @author - Michael Loewe Alivio
  */
+
+// changes needed in Editing Grouped Data
+// changes needed in Validations
 public class Main extends Application {
     
     @Override

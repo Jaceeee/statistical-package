@@ -165,8 +165,7 @@ public class GlobalContext {
                     l[i].remove();
                 }
             }
-        }
-               
+        }               
         return ans;
     }
     

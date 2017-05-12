@@ -15,8 +15,7 @@ import java.util.Arrays;
 public class GlobalContext {
     public static final GlobalContext gc = new GlobalContext();
     public static boolean groupedChoice = false;
-    public static boolean ungroupedChoice = false;
-    
+    public static boolean ungroupedChoice = false;    
     public static boolean modechoice = false;
     public static boolean medianchoice = false;
     public static boolean meanchoice = false;
@@ -56,8 +55,7 @@ public class GlobalContext {
     public static boolean ungroupedOption;
     
     public static float classWidth;
-    
-    
+        
     private GlobalContext() {
     }
     
@@ -168,14 +166,15 @@ public class GlobalContext {
                     Float.parseFloat(groupedData[modalClass].getFrequency()) &&
                     f1 == false){
                 f1 = true;
-            } if(Float.parseFloat(groupedData[i].getFrequency()) > 
+            } else if(Float.parseFloat(groupedData[i].getFrequency()) > 
                     Float.parseFloat(groupedData[modalClass].getFrequency())){
                 modalClass = i;
                 modalClasses = Integer.toString(i+1);
                 modalCounter = 0;                
-            } if(Float.parseFloat(groupedData[i].getFrequency()) == 
+            } else if(Float.parseFloat(groupedData[i].getFrequency()) == 
                     Float.parseFloat(groupedData[modalClass].getFrequency())) {                                                
                 modalCounter++;
+                modalClasses += ", " + Integer.toString(i+1);
             }
         }
         if(f1){

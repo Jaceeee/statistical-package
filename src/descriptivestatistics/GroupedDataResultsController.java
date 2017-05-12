@@ -51,6 +51,7 @@ public class GroupedDataResultsController implements Initializable {
     @FXML private Label groupedDataTableLabel;
     @FXML private Label firstCrossProductTotal;
     @FXML private Label secondCrossProductTotal;
+    @FXML private Label errorMessage;
     @FXML private TableView<descriptivestatistics.GroupedData> groupedDataTableView;    
     @FXML private TextField lowerClassLimitInput;
     @FXML private TextField upperClassLimitInput;
@@ -106,38 +107,44 @@ public class GroupedDataResultsController implements Initializable {
     }            
     
     @FXML
-    public void handleProceedAction(ActionEvent event) throws IOException {
-        List<String> choices = new ArrayList<>();
-        choices.add("Mean");
-        choices.add("Median");
-        choices.add("Mode");
-        choices.add("All");
+    public void handleProceedAction(ActionEvent event) throws IOException {        
+        if(Validation.checkState()) {
+            List<String> choices = new ArrayList<>();
+            choices.add("Mean");
+            choices.add("Median");
+            choices.add("Mode");
+            choices.add("All");
 
-        ChoiceDialog<String> dialog = new ChoiceDialog<>("Mean", choices);
-        dialog.setTitle("Measures of Central Tendency");
-        dialog.setHeaderText("Mean, Median and/or Mode?");
-        dialog.setContentText("Select your option:");
+            ChoiceDialog<String> dialog = new ChoiceDialog<>("Mean", choices);
+            dialog.setTitle("Measures of Central Tendency");
+            dialog.setHeaderText("Mean, Median and/or Mode?");
+            dialog.setContentText("Select your option:");
 
-        // Traditional way to get the response value.
-        Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()){
-            if(result.get().equals("Mean")){
-                GlobalContext.meanOption = true;
-            } else if(result.get().equals("Median")){
-                GlobalContext.medianOption = true;
-            } else if(result.get().equals("Mode")){
-                GlobalContext.modeOption = true;
-            } else {
-                GlobalContext.meanOption = true;
-                GlobalContext.medianOption = true;
-                GlobalContext.modeOption = true;
-            } 
-            
-            stage = (Stage) proceed.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("MeasuresTemplate.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            // Traditional way to get the response value.
+            Optional<String> result = dialog.showAndWait();
+            if (result.isPresent()){
+                if(result.get().equals("Mean")){
+                    GlobalContext.meanOption = true;
+                } else if(result.get().equals("Median")){
+                    GlobalContext.medianOption = true;
+                } else if(result.get().equals("Mode")){
+                    GlobalContext.modeOption = true;
+                } else {
+                    GlobalContext.meanOption = true;
+                    GlobalContext.medianOption = true;
+                    GlobalContext.modeOption = true;
+                } 
+
+                stage = (Stage) proceed.getScene().getWindow();
+                root = FXMLLoader.load(getClass().getResource("MeasuresTemplate.fxml"));
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+                errorMessage.setVisible(false);
+            }
+        } else {
+            errorMessage.setVisible(true);
+            errorMessage.setText("There's something wrong with input.");
         }
     }
     
@@ -153,6 +160,7 @@ public class GroupedDataResultsController implements Initializable {
 //    this is the code for editing grouped data
     @FXML 
     public void handleEditDialogOption(ActionEvent event) throws IOException {
+        errorMessage.setVisible(false);
         Dialog<descriptivestatistics.GroupedData> dialog = new Dialog<>();
         dialog.setTitle("Editing Table");
         dialog.setHeaderText("Enter the following information, and make sure they're inputted properly.");
@@ -196,16 +204,21 @@ public class GroupedDataResultsController implements Initializable {
             }
         });       
         Optional result = dialog.showAndWait(); 
-        if(result.isPresent()){
-            int index = Integer.parseInt(dataIndex.getText());
-            GlobalContext.groupedData[index].setLowerClassLimit(lowerClassLimit.getText());
-            GlobalContext.groupedData[index].setUpperClassLimit(upperClassLimit.getText());
-            GlobalContext.groupedData[index].setFrequency(frequency.getText());
-            GlobalContext.setGroupedDataResults();
-            groupedDataTableView.setVisible(true);        
-            groupedDataTableView.setEditable(true);
-            System.out.println(tableList.get(index));
-            groupedDataTableView.refresh();
-        }            
+        if(result.isPresent()){            
+            int index = Integer.parseInt(dataIndex.getText()) - 1;
+            if(index < 0 || index >= GlobalContext.n){
+                errorMessage.setVisible(true);
+                errorMessage.setText("That index doesn't exist.");
+            } else {
+                GlobalContext.groupedData[index].setLowerClassLimit(lowerClassLimit.getText());
+                GlobalContext.groupedData[index].setUpperClassLimit(upperClassLimit.getText());
+                GlobalContext.groupedData[index].setFrequency(frequency.getText());
+                GlobalContext.setGroupedDataResults();
+                groupedDataTableView.setVisible(true);
+                groupedDataTableView.setEditable(true);
+                System.out.println(tableList.get(index));
+                groupedDataTableView.refresh();
+            }            
+        }   
     }            
 }
