@@ -48,6 +48,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML private Button sttbtn3;
     @FXML private Button quit;
     @FXML private Button backToPackage;
+    @FXML private RadioButton randomSamplingOption;
+    @FXML private RadioButton systematicSamplingOption;
+    @FXML private RadioButton stratifiedSamplingOption;
         
 //    First information buttons
     @FXML private Button backFromFirstInfo;
@@ -78,14 +81,18 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void handleEntryButtonAction(ActionEvent event) throws IOException {        
         //get reference to the button's stage
-        mainMenu = (Stage) rndbtn1.getScene().getWindow();        
-        //load up other FXML Document
-        root = FXMLLoader.load(getClass().getResource("FirstStageInformation.fxml"));
-        Scene scene = new Scene(root);
-        mainMenu.setScene(scene);
-        mainMenu.show();
-        System.out.println(GlobalContext.methodChoice);
-        proceed1 = false;
+        if(!randomSamplingOption.isSelected() && !stratifiedSamplingOption.isSelected() && !systematicSamplingOption.isSelected()){
+            errorMessage1.setText("Must select an action.");
+        } else {
+            mainMenu = (Stage) rndbtn1.getScene().getWindow();        
+            //load up other FXML Document
+            root = FXMLLoader.load(getClass().getResource("FirstStageInformation.fxml"));
+            Scene scene = new Scene(root);
+            mainMenu.setScene(scene);
+            mainMenu.show();
+            System.out.println(GlobalContext.methodChoice);
+            proceed1 = false;
+        }
     }
     
     @FXML
@@ -247,6 +254,15 @@ public class FXMLDocumentController implements Initializable {
     private void enterInput(ActionEvent e){                
         String input = inputPopulationFrame.getText();
         errorMessage2.setVisible(false);        
+        Node n1 = indexFrameListView.lookup(".scroll-bar");
+        if (n1 instanceof ScrollBar) {
+            final ScrollBar bar1 = (ScrollBar) n1;
+            Node n2 = samplingFrameListView.lookup(".scroll-bar");
+            if (n2 instanceof ScrollBar) {
+                final ScrollBar bar2 = (ScrollBar) n2;
+                bar1.valueProperty().bindBidirectional(bar2.valueProperty());                    
+            }
+        }
         if(input.equals("")) {
             errorMessage2.setText("Input never empty");
             errorMessage2.setVisible(true);

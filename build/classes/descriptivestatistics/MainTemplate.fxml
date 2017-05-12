@@ -49,7 +49,7 @@
          </cursor>
       </RadioButton>
       <Label fx:id="errorMessage" layoutX="86.0" layoutY="303.0" prefHeight="17.0" prefWidth="244.0" textFill="RED" />
-      <Button fx:id="backToPackage" layoutX="221.0" layoutY="291.0" mnemonicParsing="false" onAction="#handleBackToPackageAction" prefHeight="25.0" prefWidth="70.0" text="Exit">
+      <Button fx:id="backToPackage" layoutX="221.0" layoutY="291.0" mnemonicParsing="false" onAction="#handleBackToPackageAction" prefHeight="25.0" prefWidth="70.0" text="Back">
          <effect>
             <ColorAdjust hue="-0.79" saturation="0.39" />
          </effect>

@@ -14,14 +14,15 @@
             <Font name="System Bold" size="15.0" />
          </font></Label>
       <Button fx:id="quit" layoutX="214.0" layoutY="190.0" mnemonicParsing="false" onAction="#quit" text="Quit" />
-      <RadioButton layoutX="145.0" layoutY="89.0" mnemonicParsing="false" onAction="#randomSelected" text="Random Sampling">
+      <RadioButton fx:id="randomSamplingOption" layoutX="145.0" layoutY="89.0" mnemonicParsing="false" onAction="#randomSelected" text="Random Sampling">
          <toggleGroup>
             <ToggleGroup fx:id="toggle1" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton layoutX="145.0" layoutY="118.0" mnemonicParsing="false" onAction="#stratifiedSelected" text="Stratified Sampling" toggleGroup="$toggle1" />
-      <RadioButton layoutX="145.0" layoutY="150.0" mnemonicParsing="false" onAction="#systematicSelected" text="Systematic Sampling" toggleGroup="$toggle1" />
+      <RadioButton fx:id="stratifiedSamplingOption" layoutX="145.0" layoutY="118.0" mnemonicParsing="false" onAction="#stratifiedSelected" text="Stratified Sampling" toggleGroup="$toggle1" />
+      <RadioButton fx:id="systematicSamplingOption" layoutX="145.0" layoutY="150.0" mnemonicParsing="false" onAction="#systematicSelected" text="Systematic Sampling" toggleGroup="$toggle1" />
       <Button fx:id="rndbtn1" layoutX="150.0" layoutY="190.0" mnemonicParsing="false" onAction="#handleEntryButtonAction" text="Begin" />
       <Button fx:id="backToPackage" layoutX="185.0" layoutY="224.0" mnemonicParsing="false" onAction="#handleBackToPackageAction" text="Back" />
+      <Label fx:id="errorMessage1" alignment="CENTER" layoutX="65.0" layoutY="59.0" prefHeight="17.0" prefWidth="312.0" textFill="RED" />
     </children>
 </AnchorPane>
