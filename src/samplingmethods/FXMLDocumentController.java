@@ -145,6 +145,9 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {                
+        if(proceed3){
+            GlobalContext.initialize();
+        }
     }    
     
     @FXML
@@ -253,6 +256,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void enterInput(ActionEvent e){                
         String input = inputPopulationFrame.getText();
+        inputPopulationFrame.setText("");
         errorMessage2.setVisible(false);        
         Node n1 = indexFrameListView.lookup(".scroll-bar");
         if (n1 instanceof ScrollBar) {
@@ -262,13 +266,13 @@ public class FXMLDocumentController implements Initializable {
                 final ScrollBar bar2 = (ScrollBar) n2;
                 bar1.valueProperty().bindBidirectional(bar2.valueProperty());                    
             }
-        }
+        }        
         if(input.equals("")) {
             errorMessage2.setText("Input never empty");
             errorMessage2.setVisible(true);
-        } else if(GlobalContext.counter == GlobalContext.N) {
+        } else if(GlobalContext.counter == GlobalContext.N) {            
             proceed2 = true;            
-        } else {
+        } else {            
             if ((input.length() > 1 || ( !(input.charAt(0) >= 65 && input.charAt(0) <= 90 ) && !(input.charAt(0) >= 97 && input.charAt(0) <= 122) ))  && GlobalContext.option == 2) {
                 errorMessage2.setText("Invalid character input");
                 errorMessage2.setVisible(true);
@@ -281,34 +285,35 @@ public class FXMLDocumentController implements Initializable {
                 GlobalContext.arr[GlobalContext.counter] = new String();
                 GlobalContext.arr[GlobalContext.counter++] = input;
                 inputsRemaining.setText((GlobalContext.N-GlobalContext.counter)+" inputs remaining");                                
-                Integer[] arrayForIndexes = new Integer[GlobalContext.N];
+                String[] arrayForIndexes = new String[GlobalContext.N];
                 for(int i = 0; i<GlobalContext.N; i++){                    
-                    arrayForIndexes[i] = i+1;
-                }
-                populationList = FXCollections.observableArrayList(GlobalContext.arr);
-                ObservableList<Integer> indexes = FXCollections.observableArrayList(arrayForIndexes);
-                samplingFrameListView.setItems(populationList);
-                indexFrameListView.setItems(indexes);
-                inputPopulationFrame.setText("");
+                    arrayForIndexes[i] = Integer.toString(i+1);
+                }                
                 if(GlobalContext.counter == GlobalContext.N){
                     enterInputButton.setVisible(false);
-                    if(GlobalContext.methodChoice.equals("Stratified Sampling")){
+                    if(GlobalContext.methodChoice.equals("Stratified Sampling")) {                        
+                        int k = 0;
+                        for(int i = 0; i<GlobalContext.N; i++){
+                            arrayForIndexes[i] = "";
+                        }
                         String[] arrCpy = GlobalContext.arr.clone();
                         Arrays.sort(arrCpy);
                         String current = arrCpy[0];
                         String sFrame = "";
                         int counter = 1;
                         boolean toggle = true;
+                        System.out.println("Hello");
                         for (int i = 0; i < GlobalContext.N;) {
-                            if(toggle) {
-                                sFrame += String.format("Stratum %d { \n", counter);
-                                for (int j = 0; j < GlobalContext.N; j++) {
+                            if(toggle) {                                
+                                arrayForIndexes[k] = String.format("Stratum %d: ", counter);                                
+                                for (int j = 0; j <  GlobalContext.N; j++) {
                                     if (GlobalContext.arr[j].equals(arrCpy[i])) {
-                                        sFrame += String.format("Index %d = [%s]\n", j, arrCpy[i]);
+                                        System.out.println("Enterred");
+                                        arrayForIndexes[k++] += (toggle) ? '\t' + Integer.toString(j+1) : ("\t\t\t" + Integer.toString(j+1));
+                                        toggle = false;
                                     }
                                 }
-                                sFrame += "";
-                                toggle = false;
+                                sFrame += "";                                
                                 counter++;
                             }
                             else{
@@ -316,15 +321,21 @@ public class FXMLDocumentController implements Initializable {
                                     i++;
                                 else{
                                     current = arrCpy[i];
-                                    toggle = true;
-                                    sFrame += "  }\n";
+                                    toggle = true;                                    
                                 }
                             }                                                        
                         }                        
+                        populationList = FXCollections.observableArrayList(arrCpy);
                     }
                     proceed2 = true;                    
-                }                    
+                }
+                System.out.println("Hello");                
+                populationList = FXCollections.observableArrayList(GlobalContext.arr);
+                ObservableList<String> indexes = FXCollections.observableArrayList(arrayForIndexes);
+                samplingFrameListView.setItems(populationList);
+                indexFrameListView.setItems(indexes);
             }
+            
         }                
         proceed3 = false;
     }
@@ -368,16 +379,7 @@ public class FXMLDocumentController implements Initializable {
                 finalFrameIndexListView.setItems(index);
                 finalFrameSamplesListView.setItems(sampleItems);
                 errorMessage3.setVisible(false);
-                proceed3 = true;
-                Node n1 = finalFrameIndexListView.lookup(".scroll-bar");
-                if (n1 instanceof ScrollBar) {
-                    final ScrollBar bar1 = (ScrollBar) n1;
-                    Node n2 = finalFrameSamplesListView.lookup(".scroll-bar");
-                    if (n2 instanceof ScrollBar) {
-                        final ScrollBar bar2 = (ScrollBar) n2;
-                        bar1.valueProperty().bindBidirectional(bar2.valueProperty());                    
-                    }
-                }
+                proceed3 = true;                
             }
         }
         else if(GlobalContext.methodChoice == "Stratified Sampling"){
@@ -402,7 +404,11 @@ public class FXMLDocumentController implements Initializable {
             }            
             if(pass){
                 errorMessage3.setVisible(false);
-//                sample.setText(GlobalContext.doStratifiedSampling(inp));
+                GlobalContext.doStratifiedSampling(inp);
+                ObservableList index = FXCollections.observableArrayList(GlobalContext.indexArray);
+                ObservableList sampleItems = FXCollections.observableArrayList(GlobalContext.sampleArray);
+                finalFrameIndexListView.setItems(index);
+                finalFrameSamplesListView.setItems(sampleItems);
                 proceed3 = true;
             }
         }
@@ -429,14 +435,26 @@ public class FXMLDocumentController implements Initializable {
             else {
                 errorMessage3.setText("Invalid Sample Size");
                 errorMessage3.setVisible(true);
-            }
-            
-            if(pass){
+            }            
+            if(pass){                
+                GlobalContext.doSystematicSampling(inp);
+                ObservableList index = FXCollections.observableArrayList(GlobalContext.indexArray);
+                ObservableList sampleItems = FXCollections.observableArrayList(GlobalContext.sampleArray);
+                finalFrameIndexListView.setItems(index);
+                finalFrameSamplesListView.setItems(sampleItems);
                 errorMessage3.setVisible(false);
-//                sample.setText(GlobalContext.doSystematicSampling(inp));
                 proceed3 = true;
             }
-        }
+            Node n1 = finalFrameIndexListView.lookup(".scroll-bar");
+            if (n1 instanceof ScrollBar) {
+                final ScrollBar bar1 = (ScrollBar) n1;
+                Node n2 = finalFrameSamplesListView.lookup(".scroll-bar");
+                if (n2 instanceof ScrollBar) {
+                    final ScrollBar bar2 = (ScrollBar) n2;
+                    bar1.valueProperty().bindBidirectional(bar2.valueProperty());                    
+                }
+            }                        
+        }        
         if(proceed3){
 //            sample.setEditable(false);
             returnToHome.setVisible(true);

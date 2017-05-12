@@ -17,5 +17,6 @@
          </toggleGroup></RadioButton>
       <RadioButton fx:id="lab2" layoutX="140.0" layoutY="106.0" mnemonicParsing="false" text="Laboratory 2" toggleGroup="$toggle" />
       <RadioButton fx:id="lab3" layoutX="140.0" layoutY="131.0" mnemonicParsing="false" text="Laboratory 3" toggleGroup="$toggle" />
+      <Label fx:id="errorMessage" layoutX="88.0" layoutY="49.0" prefHeight="17.0" prefWidth="197.0" textFill="RED" />
     </children>
 </AnchorPane>

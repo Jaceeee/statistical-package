@@ -167,7 +167,9 @@ public class GlobalContext {
             n = Integer.parseInt(inp);
         }        
         
-        tracker = new boolean[N];
+        tracker = new boolean[N];        
+        sampleArray = new String[n];
+        indexArray = new Integer[n];
         
         int k = N / n, c = r.nextInt(k);
         for(int i = 0; i<N; i++){
@@ -176,10 +178,14 @@ public class GlobalContext {
 
         ans = "{  \n";
         System.out.println(k +" " + N + " " + n);
+        int counter = 0;
         do {
             if (!tracker[c]) {
                 ans += String.format("Index %d = %s\n", c+1, arr[c]);
                 tracker[c] = true;
+                sampleArray[counter] = arr[c];
+                indexArray[counter] = c+1;
+                counter++;
             }
             c += k;
         } while (c < N);

@@ -3,12 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Juan%20Carlos/Documents/NetBeansProjects/StatisticalPackage/src/statisticalpackage/MainStatisticalPackageController.java</file>
-            <file>file:/C:/Users/Juan%20Carlos/Documents/NetBeansProjects/StatisticalPackage/src/statisticalpackage/MainMenu.fxml</file>
-            <file>file:/C:/Users/Juan%20Carlos/Documents/NetBeansProjects/StatisticalPackage/src/statisticalpackage/GlobalContext.java</file>
-            <file>file:/C:/Users/Juan%20Carlos/Documents/NetBeansProjects/StatisticalPackage/src/statisticalpackage/EntryView.fxml</file>
-            <file>file:/C:/Users/Juan%20Carlos/Documents/NetBeansProjects/StatisticalPackage/src/statisticalpackage/StatisticalPackage.java</file>
-            <file>file:/C:/Users/Juan%20Carlos/Documents/NetBeansProjects/StatisticalPackage/src/testpackage/TestController.java</file>
+            <file>file:/C:/Users/Juan%20Carlos/Documents/NetBeansProjects/statistical-package/src/samplingmethods/GlobalContext.java</file>
+            <file>file:/C:/Users/Juan%20Carlos/Documents/NetBeansProjects/statistical-package/src/samplingmethods/FXMLDocumentController.java</file>
         </group>
     </open-files>
 </project-private>

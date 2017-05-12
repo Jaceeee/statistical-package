@@ -35,6 +35,7 @@ public class MainStatisticalPackageController implements Initializable {
     @FXML RadioButton lab1;
     @FXML RadioButton lab2;
     @FXML RadioButton lab3;    
+    @FXML Label errorMessage;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -58,18 +59,22 @@ public class MainStatisticalPackageController implements Initializable {
     
     @FXML
     public void handleProceedAction2(ActionEvent event) throws IOException {
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        Parent root;
-        if(lab1.isSelected()) {
-            root = FXMLLoader.load(getClass().getResource("/samplingmethods/FXMLDocument.fxml"));
-        } else if(lab2.isSelected()) {            
-            root = FXMLLoader.load(getClass().getResource("/datapresentation/MainTemplate.fxml"));        
+        if(!lab1.isSelected() && !lab2.isSelected() && !lab3.isSelected()) {
+            errorMessage.setText("Must select an option before proceeding");
         } else {
-            root = FXMLLoader.load(getClass().getResource("/descriptivestatistics/MainTemplate.fxml"));                    
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            Parent root;
+            if(lab1.isSelected()) {
+                root = FXMLLoader.load(getClass().getResource("/samplingmethods/FXMLDocument.fxml"));
+            } else if(lab2.isSelected()) {            
+                root = FXMLLoader.load(getClass().getResource("/datapresentation/MainTemplate.fxml"));        
+            } else {
+                root = FXMLLoader.load(getClass().getResource("/descriptivestatistics/MainTemplate.fxml"));                    
+            }
+            Scene scene = new Scene(root);        
+            stage.setScene(scene);
+            stage.show();
         }
-        Scene scene = new Scene(root);        
-        stage.setScene(scene);
-        stage.show();
     }
 }
