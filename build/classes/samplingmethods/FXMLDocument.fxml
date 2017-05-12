@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="263.0" prefWidth="414.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="samplingmethods.FXMLDocumentController">
+    <children>
+      <Label fx:id="label2" alignment="CENTER" layoutX="71.0" layoutY="24.0" minHeight="16" minWidth="69" prefHeight="35.0" prefWidth="273.0" text="Basic Sampling Methods">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
+      <Button fx:id="quit" layoutX="214.0" layoutY="190.0" mnemonicParsing="false" onAction="#quit" text="Quit" />
+      <RadioButton layoutX="145.0" layoutY="89.0" mnemonicParsing="false" onAction="#randomSelected" text="Random Sampling">
+         <toggleGroup>
+            <ToggleGroup fx:id="toggle1" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="145.0" layoutY="118.0" mnemonicParsing="false" onAction="#stratifiedSelected" text="Stratified Sampling" toggleGroup="$toggle1" />
+      <RadioButton layoutX="145.0" layoutY="150.0" mnemonicParsing="false" onAction="#systematicSelected" text="Systematic Sampling" toggleGroup="$toggle1" />
+      <Button fx:id="rndbtn1" layoutX="150.0" layoutY="190.0" mnemonicParsing="false" onAction="#handleEntryButtonAction" text="Begin" />
+      <Button fx:id="backToPackage" layoutX="185.0" layoutY="224.0" mnemonicParsing="false" onAction="#handleBackToPackageAction" text="Back" />
+    </children>
+</AnchorPane>

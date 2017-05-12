@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="258.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="descriptivestatistics.MainController">
+   <children>
+      <Label layoutX="62.0" layoutY="14.0" prefHeight="54.0" prefWidth="237.0" text="MEASURES OF CENTRAL TENDENCY" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Century Gothic" size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="back" layoutX="90.0" layoutY="203.0" mnemonicParsing="false" onAction="#primaryInput" prefHeight="29.0" prefWidth="64.0" text="Back">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <ColorAdjust hue="-0.79" saturation="0.39" />
+         </effect>
+      </Button>
+      <Button fx:id="proceed" disable="true" layoutX="189.0" layoutY="203.0" mnemonicParsing="false" onAction="#handleOutputAction" prefHeight="29.0" prefWidth="64.0" text="Proceed">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <ColorAdjust hue="-0.79" saturation="0.39" />
+         </effect>
+      </Button>
+      <RadioButton layoutX="127.0" layoutY="76.0" mnemonicParsing="false" onAction="#MedianSelect" prefHeight="17.0" prefWidth="87.0" text="MEDIAN">
+         <toggleGroup>
+            <ToggleGroup fx:id="toggle" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="127.0" layoutY="106.0" mnemonicParsing="false" onAction="#ModeSelect" prefHeight="17.0" prefWidth="74.0" text="MODE" toggleGroup="$toggle" />
+      <RadioButton layoutX="127.0" layoutY="136.0" mnemonicParsing="false" onAction="#MeanSelect" prefHeight="17.0" prefWidth="74.0" text="MEAN" toggleGroup="$toggle" />
+      <RadioButton layoutX="127.0" layoutY="165.0" mnemonicParsing="false" onAction="#allSelect" prefHeight="17.0" prefWidth="74.0" text="ALL" toggleGroup="$toggle" />
+   </children>
+</AnchorPane>

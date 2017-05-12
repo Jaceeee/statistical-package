@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="469.0" prefWidth="696.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="datapresentation.MainController">
+   <children>
+      <TableView fx:id="frequencyDistributionTableView" layoutX="20.0" layoutY="44.0" prefHeight="338.0" prefWidth="630.0">
+        <columns>
+          <TableColumn fx:id="classLimits" editable="false" prefWidth="88.0" resizable="false" text="Class Limits" />
+          <TableColumn fx:id="trueClassLimits" editable="false" minWidth="0.0" prefWidth="115.0" resizable="false" text="True Class Limits" />
+            <TableColumn fx:id="midpoints" editable="false" minWidth="0.0" prefWidth="73.0" resizable="false" text="Midpoints" />
+            <TableColumn fx:id="frequency" editable="false" prefWidth="98.0" resizable="false" text="Frequency" />
+            <TableColumn fx:id="frequencyPercentage" editable="false" resizable="false" text="\%" />
+            <TableColumn fx:id="cumulativeFrequency" editable="false" prefWidth="99.0" resizable="false" text="&lt;CF" />
+            <TableColumn fx:id="cumulativeFrequencyPercentage" editable="false" prefWidth="76.0" resizable="false" text="&lt;CF%" />
+        </columns>
+      </TableView>
+      <Button fx:id="proceed4" layoutX="212.0" layoutY="422.0" mnemonicParsing="false" onAction="#handleInputAction4" text="Generate Histogram">
+         <effect>
+            <ColorAdjust hue="-0.79" saturation="0.39" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="back3" layoutX="346.0" layoutY="422.0" mnemonicParsing="false" onAction="#handleBackAction3" text="Back to Main Menu">
+         <effect>
+            <ColorAdjust hue="-0.79" saturation="0.39" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Label fx:id="frequencyDistributionTableLabel" alignment="CENTER" layoutX="20.0" layoutY="21.0" prefHeight="17.0" prefWidth="630.0">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></Label>
+      <Label fx:id="sampleSizeLabel" layoutX="313.0" layoutY="392.0" prefHeight="17.0" prefWidth="74.0">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="sampleSizeLabel1" alignment="CENTER" layoutX="420.0" layoutY="392.0" prefHeight="17.0" prefWidth="38.0" text="100%">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Label>
+      <Button fx:id="distributionTableSwitch" layoutX="20.0" layoutY="397.0" mnemonicParsing="false" onAction="#handleChangeInTableInput" prefHeight="25.0" prefWidth="123.0" text="Show open ended">
+         <effect>
+            <ColorAdjust hue="-0.79" saturation="0.39" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+   </children>
+</AnchorPane>
