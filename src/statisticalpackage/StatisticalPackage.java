@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 public class StatisticalPackage extends Application {
     
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws Exception {        
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));        
         Scene scene = new Scene(root);        
         stage.setScene(scene);

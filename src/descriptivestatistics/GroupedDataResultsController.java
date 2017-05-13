@@ -109,6 +109,16 @@ public class GroupedDataResultsController implements Initializable {
     @FXML
     public void handleProceedAction(ActionEvent event) throws IOException {        
         if(Validation.checkState()) {
+            GlobalContext.setFirstCrossProductResult();
+            firstCrossProductTotal.setText(Float.toString((float) Math.sqrt(GlobalContext.firstCrossProductResult)));
+            GlobalContext.setSecondCrossProductResult();
+            secondCrossProductTotal.setText(Float.toString(GlobalContext.secondCrossProductResult));
+            GlobalContext.setFrequencySum();                
+            GlobalContext.setGroupedVariance();
+            GlobalContext.setGroupedStandardDeviation();
+            GlobalContext.setGroupedMean();
+            GlobalContext.setGroupedMode();
+            GlobalContext.resetMeasureOptions();
             List<String> choices = new ArrayList<>();
             choices.add("Mean");
             choices.add("Median");

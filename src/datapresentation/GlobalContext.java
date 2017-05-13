@@ -30,6 +30,9 @@ public class GlobalContext {
     public static Data[] numericData;
     public static boolean f1,f2,f3,f4;
     public static boolean openEndedSetting;
+    public static int fracDigits;    
+    private static boolean digitsChk;
+    private static float smallestPlaceValue;    
     
     public GlobalContext getInstance(){
         return gc;
@@ -50,6 +53,9 @@ public class GlobalContext {
         f1 = true;
         errorMessage = null;
         openEndedSetting = false;
+        fracDigits = 0;
+        digitsChk = false;
+        smallestPlaceValue = 1;
     }        
         
     
@@ -157,12 +163,13 @@ public class GlobalContext {
     }
     
     public static float getMinimum(){
-        float min = numericArray[0];
+        float min = numericArray[0];        
         for(int i = 0; i<n; i++){
             if(numericArray[i] < min){
                 min = numericArray[i];
             }
         }
+        setSmallestPlaceValue(min);
         return min;
     }
     
@@ -178,16 +185,63 @@ public class GlobalContext {
     }
     
     public static float getLowerBound(int i) {
-        return (i != 0) ? getMinimum() + (i * getClassWidth()) : getMinimum();
+        DecimalFormat df = new DecimalFormat("#.###");
+        df.setRoundingMode(RoundingMode.HALF_UP);        
+        fracDigits = numberOfFractionalDigits(getMinimum());
+        df.setMaximumFractionDigits(fracDigits);
+        return (i != 0) ? Float.parseFloat(df.format(getUpperBound(i-1) + getSmallestPlaceValue() * ((inputType == 4) ? 100 : 10))) : getMinimum();
     }
     
     public static float getUpperBound(int i){
-        return (float) (getLowerBound(i) + (getClassWidth()) - 1);
+        DecimalFormat df = new DecimalFormat("#.###");        
+        df.setRoundingMode(RoundingMode.CEILING);                
+        df.setMaximumFractionDigits(fracDigits);        
+        return padZeros((float) (getLowerBound(i) + Float.parseFloat(df.format((getClassWidth()) - 10*getSmallestPlaceValue()))));
+    }
+    
+    private static float padZeros(float value) {
+        int num = getNumberOfFractionDigits(value);
+        String tmp = Float.toString(value);
+        if(!checkPointPresence(tmp)){
+            tmp += '.';
+        }
+        if(num < fracDigits) {
+            tmp+='0';
+            num++;
+        }
+        return Float.parseFloat(tmp);
+    }
+    
+    private static boolean checkPointPresence(String val) {
+        for(int i = 0; i<val.length(); i++){
+            if(val.charAt(i) == '.'){
+                return true;
+            }
+        }
+        return false;
+    }
+    private static int getNumberOfFractionDigits(float value) {
+        int ct = 0;
+        while(value - Math.floor(value) > 0){
+            value*=10;
+            ct++;
+        }        
+        return ct;
+    }
+    private static int numberOfFractionalDigits(float i){
+        int ct = 0;
+        while(i - Math.floor(i) > 0) {
+            i*=10;
+            ct++;
+        }
+        return ct;
     }
     
     public static float getClassWidth() {
 //        TODO
-        return (float) Math.ceil(getRange() / getNumOfClasses());
+//        don't round up class width to nearest whole number
+        DecimalFormat df = new DecimalFormat("#.###");              
+        return (inputType == 4) ? Float.parseFloat(df.format(((float)getRange() / (float)getNumOfClasses()))) : (float)getRange() / (float)getNumOfClasses();
     }
     
     public static float getRange(){
@@ -198,27 +252,32 @@ public class GlobalContext {
         return (getUpperBound(i) + getLowerBound(i)) / 2;
     }
     
-    public static float getSmallestPlaceValue(float value) {        
+    public static void setSmallestPlaceValue(float value) {
         float d = 1;
-        boolean t = ((value / d) % 1) == 0;
-        
+        boolean t = ((value / d) % 1) == 0;        
         while(!t) {
-            d *= 0.1;
-            t = ((value / d) % 1) == 0;
-        }
-                      
-        return (float) (d * 0.1);
+            d *= 0.1;            
+            t = ((value / d) % 1) == 0;            
+            if(digitsChk) {
+                fracDigits++;
+            }
+        }                      
+        digitsChk = false;
+        smallestPlaceValue = (float) (d * 0.1);
     }
     
+    public static float getSmallestPlaceValue() {        
+        return smallestPlaceValue;
+    }        
+    
     public static float getTrueLowerClassLimit(int i) {
-        float lowerBound = getLowerBound(i);
-        
-        return lowerBound - (getSmallestPlaceValue(lowerBound) * 5);
+        float lowerBound = getLowerBound(i);        
+        return lowerBound - (getSmallestPlaceValue() * (inputType == 4 ? 50 : 5));
     }
     
     public static float getTrueUpperClassLimit(int i) {
         float upperBound = getUpperBound(i);
-        return upperBound + (getSmallestPlaceValue(upperBound) * 5);
+        return upperBound + (getSmallestPlaceValue() * (inputType == 4 ? 50 : 5));
     }
     
     public static int getFrequency(float lowerClassLimit, float upperClassLimit) {
@@ -251,11 +310,14 @@ public class GlobalContext {
     
     public static String combineNumericData(int i) {
         // class limits
-        String comb = String.format("%.2f-%.2f", getLowerBound(i), getUpperBound(i)) + ":";
+        DecimalFormat df = new DecimalFormat("#.###");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        
+        String comb = String.format("%s-%s", padZeros(Float.parseFloat(df.format(getLowerBound(i)))), padZeros(Float.parseFloat(df.format(getUpperBound(i))))) + ":";
         // true class limits
-        comb += String.format("%.4f-%.4f", getTrueLowerClassLimit(i), getTrueUpperClassLimit(i)) + ":";
+        comb += String.format("%s-%s", df.format(getTrueLowerClassLimit(i)), df.format(getTrueUpperClassLimit(i))) + ":";
         // midpoint
-        comb += String.format("%.1f", getMidpoint(i)) + ":";
+        comb += String.format("%s", df.format(getMidpoint(i))) + ":";
         // frequency
         comb += String.format("%d", getFrequency(getTrueLowerClassLimit(i),getTrueUpperClassLimit(i))) + ":";
         // percentage

@@ -299,7 +299,7 @@ public class MainController implements Initializable {
             title.setText(GlobalContext.title);
         }
         if(GlobalContext.f2) {
-            GlobalContext.setData(GlobalContext.openEndedSetting);            
+            GlobalContext.setData(GlobalContext.openEndedSetting);
             
             if(GlobalContext.categoricalChoice) {
                 setSummaryTable();
