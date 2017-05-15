@@ -154,18 +154,21 @@ public class GlobalContext {
                     int index = Integer.parseInt(l[i].peek());
                     if (option == 1) {
                         ans += String.format((j + 1 != sampleSizePerStratum) ? "Index %d : Item %s\n " : "Index %d : Item %s } \n", Integer.parseInt(l[i].peek()) + 1, item);
-                        stratifiedIndexArray[a] += (!trigger) ? "\t" + Integer.toString(index+1) : "\t\t\t\t\t" + Integer.toString(index+1);
+                        stratifiedIndexArray[a] += (!trigger) ? "\t" + Integer.toString(index+1) : "\t\t\t\t\t" + Integer.toString(index+1);                        
                         sampleArray[a++] = item;
                         trigger = true;
                     } else {
                         ans += String.format((j + 1 != sampleSizePerStratum) ? "Index %d : Item '%s'\n, " : "Index %d : Item '%c' } \n", Integer.parseInt(l[i].peek()) + 1, (char) Integer.parseInt(item));
                         stratifiedIndexArray[a] += (!trigger) ? "\t" + Integer.toString(index+1) : "\t\t\t\t\t" + Integer.toString(index+1);
-                        sampleArray[a++] = item;
+                        int tmp = Integer.parseInt(item);                        
+                        sampleArray[a++] = "" + (char)tmp;                        
+                        trigger = true;
                     }
                     l[i].remove();
                 }
             }
-        }               
+        }
+               
         return ans;
     }
     

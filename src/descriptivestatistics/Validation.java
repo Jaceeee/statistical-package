@@ -48,7 +48,6 @@ public class Validation {
     
     public static boolean isNumeric(String s) {
         if(s.matches("^[0-9]+$")){
-            System.out.println("Hello, world!");
             GlobalContext.inputType = 3;
             return true;
         } else if(s.matches("^[A-z][A-z]+$")){ return false; } 
@@ -69,31 +68,5 @@ public class Validation {
     
     public static boolean checkGroupedLimit(int n) {
         return (n >= 3) ? true : false;
-    }
-    
-//    for grouped data specific validations
-    
-    public static boolean checkState() {
-        boolean chk = true;
-        int standardWidth = Integer.parseInt(GlobalContext.groupedData[0].getUpperClassLimit()) - Integer.parseInt(GlobalContext.groupedData[0].getLowerClassLimit());
-        float smallestPlaceValue = GlobalContext.getSmallestPlaceValue(Integer.parseInt(GlobalContext.groupedData[0].getUpperClassLimit())) * 10;
-        
-        for(int i = 0; i<GlobalContext.n; i++) {
-            int currentWidth = Integer.parseInt(GlobalContext.groupedData[i].getUpperClassLimit()) - Integer.parseInt(GlobalContext.groupedData[i].getLowerClassLimit());
-            
-            if(currentWidth != standardWidth){
-                System.out.println("type 1 error");
-                chk = false;                
-            } 
-            
-            if(i+1 < GlobalContext.n &&
-                    Float.parseFloat(GlobalContext.groupedData[i].getUpperClassLimit()) + 
-                    smallestPlaceValue != Float.parseFloat
-                    (GlobalContext.groupedData[i+1].getLowerClassLimit())){
-                System.out.println("type 2 error");
-                chk = false;
-            }
-        }
-        return chk;
     }
 }

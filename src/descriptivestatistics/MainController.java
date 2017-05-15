@@ -42,8 +42,6 @@ public class MainController implements Initializable {
     @FXML private TextField titlefield;    
     @FXML private TextField nfield;
     @FXML private Button backToPackage;
-    //@FXML private TextArea datadisp;
-    //@FXML private TextArea numberlist;
     @FXML private Button back;
     @FXML private Button proceed;
     @FXML private Button enter;
@@ -66,14 +64,14 @@ public class MainController implements Initializable {
     @FXML private Button back1;
     @FXML private TextField titleField;
     @FXML private TextField inputLimitField;
+    
     @FXML
     private void MainMenu(ActionEvent event) throws IOException{
         main = (Stage) back.getScene().getWindow();                        
-        root = FXMLLoader.load(getClass().getResource("MainTemplate.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/statisticalpackage/MainMenu.fxml"));
         Scene scene = new Scene(root);
         main.setScene(scene);
         main.show();
-        
         GlobalContext.initialize();
     }
       
@@ -84,26 +82,27 @@ public class MainController implements Initializable {
     
     @FXML
     private void groupedSelected(ActionEvent event) throws IOException{
-        if(GlobalContext.groupedOption == false) {
-            GlobalContext.groupedOption = true;
+        if(GlobalContext.ungroupedOption && GlobalContext.ungroupedChoice) {
             GlobalContext.ungroupedOption = false;
-        } else {
-            GlobalContext.groupedOption = false;
+            GlobalContext.ungroupedChoice = false;
         }
+        GlobalContext.groupedChoice = true;
+        GlobalContext.groupedOption = true;
         proceed.setDisable(false);
-        GlobalContext.setGrouped();
+        //GlobalContext.setGrouped();
     }
     
     @FXML
     private void ungroupedSelected(ActionEvent event) throws IOException{
-        if(GlobalContext.ungroupedOption == false) {
-            GlobalContext.ungroupedOption = true;
+        
+        if(GlobalContext.groupedOption && GlobalContext.groupedChoice) { 
             GlobalContext.groupedOption = false;
-        } else {
-            GlobalContext.ungroupedOption = false;
+            GlobalContext.groupedChoice = false;
         }
+        GlobalContext.ungroupedChoice = true;
+        GlobalContext.ungroupedOption = true;
         proceed.setDisable(false);
-        GlobalContext.setUngrouped();
+        //GlobalContext.setUngrouped();
     }
     
     @FXML
@@ -124,18 +123,18 @@ public class MainController implements Initializable {
             }
         } else {
             errorMessage.setText("Must select an option before proceeding");
-        }
-        
+        }        
     }
-    
     //get title 
     //get sample size
     
     @FXML
     private void primaryInput(ActionEvent event) throws IOException{
-        if(Validation.isNumeric(nfield.getText()) && Validation.checkLimit(Integer.parseInt(nfield.getText()))) {
-            GlobalContext.n = Integer.parseInt(nfield.getText());
-            GlobalContext.title = titlefield.getText();
+        if(GlobalContext.flagcont || (Validation.isNumeric(nfield.getText()) && Validation.checkLimit(Integer.parseInt(nfield.getText())))) {
+            if(!GlobalContext.flagcont){
+                GlobalContext.n = Integer.parseInt(nfield.getText());
+                GlobalContext.title = titlefield.getText();
+            }
             GlobalContext.categoricalArray = new String[GlobalContext.n];
             GlobalContext.counter = 0;
             GlobalContext.numberArray = new Integer[GlobalContext.n];
@@ -165,7 +164,6 @@ public class MainController implements Initializable {
         }
         //adding a special character to terminate
         
-        System.out.println(GlobalContext.inputType);
         if(GlobalContext.f1) {
 
            GlobalContext.categoricalArray[GlobalContext.counter] = text;
@@ -182,9 +180,7 @@ public class MainController implements Initializable {
                proceed.setDisable(false); //setting continue to enable to proceed
                datainput.setEditable(false); //no innputs anymore
                edit.setDisable(false); //setting edit to not be disable anymore
-
                //proceed to primaryInput3
-               //inputlist.editableProperty();
                GlobalContext.flagcont = true;
            }
            err.setText("");
@@ -198,16 +194,11 @@ public class MainController implements Initializable {
     //editting
     @FXML
     private void primaryInput3(ActionEvent event) throws IOException{
-        //TODO
-        //set TextArea to editable
         if(GlobalContext.flagcont) { 
             inputlist.setCellFactory(TextFieldListCell.forListView());
             inputlist.setEditable(true);
             proceed.setDisable(false); 
         } 
-        //System.out.println(edit.is + " hoyy");
-        //if(event.getCode().equals())
-        
         edit.setOnMouseClicked(new EventHandler<MouseEvent>()
         {
             @Override
@@ -225,11 +216,9 @@ public class MainController implements Initializable {
                             err.setText("Invalid Input");
                         }
                     }
-                    
                     if(!ftemp){
                         err.setText("");
                         GlobalContext.flagcont = true;
-                        
                         edit.setText("Edit");
                         proceed.setDisable(false);
                         inputlist.setEditable(false);
@@ -253,7 +242,9 @@ public class MainController implements Initializable {
     //after proceed make function here
     @FXML
     private void measureChoice(ActionEvent event) throws IOException {
-        main = (Stage) proceed.getScene().getWindow();
+        if(!GlobalContext.checkback) main = (Stage) proceed.getScene().getWindow();
+        else main = (Stage) back1.getScene().getWindow();
+        
         root = FXMLLoader.load(getClass().getResource("Measure.fxml"));
         Scene scene = new Scene(root);
         main.setScene(scene);
@@ -330,8 +321,10 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //not yet complete
         if(GlobalContext.f2 || GlobalContext.f3 || GlobalContext.f4){
-            if(GlobalContext.inputType == 3) { GlobalContext.sortingIntArr(); }
-            else { GlobalContext.sortingFloatArr(); } 
+            if(GlobalContext.inputType == 3 && !GlobalContext.checkback) { GlobalContext.sortingIntArr(); }
+            else if(GlobalContext.inputType == 4 && !GlobalContext.checkback){ GlobalContext.sortingFloatArr(); } 
+            
+            GlobalContext.checkback = true;
             title.setText(GlobalContext.title);
             try {
                 listviewfunc();
@@ -340,90 +333,66 @@ public class MainController implements Initializable {
             }
         }
         //median
-//        if(GlobalContext.f2 && GlobalContext.f3 && GlobalContext.f4){
-//            measuretype.setText("All");
-//            String text = "";
-//            int num = GlobalContext.modeCount();
-//            switch (num) {
-//                case 0:
-//                    text = "No mode value - 'no mode'";
-//                    break;
-//                case 1:
-//                    text = Integer.toString(num) + " modes - 'unimodal'";
-//                    break;
-//                case 2:
-//                    text =  Integer.toString(num) + " modes - 'bimodal'";
-//                    break;
-//                case 3:
-//                    text = Integer.toString(num) + " modes - 'multimodal'";
-//                    break;
-//                default:
-//                    break;
-//            }
-//            float sampvar = (float) GlobalContext.sampleVariance();
-//            float standev = (float) GlobalContext.standardDeviation();
-//            
-//            outlabel.setText("Median: " + String.valueOf((Float.parseFloat(GlobalContext.categoricalArray[GlobalContext.n/2 - 1]) +
-//                            Float.parseFloat(GlobalContext.categoricalArray[GlobalContext.n/2 + 1])) / 2)
-//            + "\nMode: " + text + "\nMean: " + "Sample Variance = " + sampvar + "\n" +
-//                    "Standard Deviation = " + standev
-//                    + "\n" + "Mean = " + GlobalContext.getMean());
-//        } else if(GlobalContext.f2){        
         String inp = "";
-          if(GlobalContext.f2){              
+        if(GlobalContext.f2){
             measuretype.setText("Median");
             if(GlobalContext.counter % 2 != 0) {
-                inp +=(GlobalContext.categoricalArray[GlobalContext.n / 2]);
-                outlabel.setText((GlobalContext.categoricalArray[GlobalContext.n / 2]));
+                outlabel.setText((GlobalContext.categoricalArray[GlobalContext.n / 2])
+                + "\n" + "Range: " + GlobalContext.getRange());
             } else {
-                int low = (GlobalContext.n / 2) - 1;
+                int low = GlobalContext.n / 2;
                 int high = (GlobalContext.n / 2) + 1;
-                float lownumb;
-                float highnumb;
-                lownumb = Integer.parseInt(GlobalContext.categoricalArray[low]);
-                highnumb = Integer.parseInt(GlobalContext.categoricalArray[high]);
-                System.out.println(lownumb + " mao ni si lownumb");
-                System.out.println(highnumb + " mao ni si highnnumb");
-                inp += String.valueOf(( (float) lownumb +  (float )highnumb) / 2);
-                outlabel.setText(String.valueOf(( (float) lownumb +  (float )highnumb) / 2));                
-            }
-            outlabel.setText(inp);
-        } if(GlobalContext.f3){
-            inp+='\n';
+                //float
+                outlabel.setText(String.valueOf((Float.parseFloat(GlobalContext.categoricalArray[low]) +
+                        Float.parseFloat(GlobalContext.categoricalArray[high])) / 2)
+                + "\n" + "Range: " + GlobalContext.getRange());
+                inp += String.valueOf("Median: "+ (Float.parseFloat(GlobalContext.categoricalArray[low]) +
+                    Float.parseFloat(GlobalContext.categoricalArray[high])) / 2
+                + "\n" + "Range: " + GlobalContext.getRange());
+            } 
+        } 
+        if(GlobalContext.f3){
+            inp += "\nModes: ";
             measuretype.setText("Mode");
             int num = GlobalContext.modeCount();
             switch (num) {
                 case 0:
-                    inp +="No mode value - 'no mode'";
+                    
                     outlabel.setText("No mode value - 'no mode'");
+                    inp += "No mode value - 'no mode'";
                     break;
                 case 1:
-                    inp += num + " modes - 'unimodal'";
                     outlabel.setText(num + " modes - 'unimodal'");
+                    inp += num + " modes - 'unimodal'";
                     break;
                 case 2:
-                    inp += num + " modes - 'bimodal'";
                     outlabel.setText(num + " modes - 'bimodal'");
+                    inp += num + " modes - 'bimodal'";
                     break;
                 case 3:
-                    inp += num + " modes - 'multimodal'";
                     outlabel.setText(num + " modes - 'multimodal'");
+                    inp += num + " modes - 'multimodal'";
                     break;
-                default:
+                default:                    
+                    System.out.println("hi! ni agi ka sa switch? diri ? ");
                     break;
-            }
-            outlabel.setText(inp);
-        } if(GlobalContext.f4){
-            inp += "\n";
+            } 
+        } 
+        if(GlobalContext.f4){
             measuretype.setText("Mean");
+            inp += "\nMean: ";
             float sampvar = (float) GlobalContext.sampleVariance();
             float standev = (float) GlobalContext.standardDeviation();
-            inp += "Sample Variance = " + sampvar + "\n" +
-                    "Standard Deviation = " + standev
-                    + "\n" + "Mean = " + GlobalContext.getMean();
             outlabel.setText("Sample Variance = " + sampvar + "\n" +
                     "Standard Deviation = " + standev
                     + "\n" + "Mean = " + GlobalContext.getMean());
+            //outlabel.setText("Sample Variance = " + );
+            inp += "\nSample Variance = " + sampvar + "\n" +
+                    "Standard Deviation = " + standev
+                    + "\n" + "Mean = " + GlobalContext.getMean();
+        }
+        if(GlobalContext.f2 && GlobalContext.f3 && GlobalContext.f4) { 
+            measuretype.setText("All");
             outlabel.setText(inp);
         }
     }

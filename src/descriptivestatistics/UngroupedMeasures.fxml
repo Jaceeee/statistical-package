@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="323.0" prefWidth="494.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="descriptivestatistics.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="351.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="descriptivestatistics.MainController">
    <children>
-      <Button fx:id="back" layoutX="320.0" layoutY="260.0" mnemonicParsing="false" onAction="#MainMenu" prefHeight="37.0" prefWidth="86.0" text="Main Menu">
+      <Button fx:id="back" layoutX="283.0" layoutY="290.0" mnemonicParsing="false" onAction="#MainMenu" prefHeight="37.0" prefWidth="86.0" text="Main Menu">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -18,19 +18,30 @@
             <ColorAdjust hue="-0.79" saturation="0.39" />
          </effect>
       </Button>
-      <ListView fx:id="inputlist" layoutX="137.0" layoutY="87.0" prefHeight="210.0" prefWidth="98.0" />
-      <Label layoutX="163.0" layoutY="57.0" prefHeight="22.0" prefWidth="46.0" text="INPUT" />
-      <Label fx:id="measuretype" alignment="CENTER" layoutX="263.0" layoutY="68.0" prefHeight="37.0" prefWidth="151.0" textAlignment="CENTER" />
-      <Label fx:id="outlabel" alignment="CENTER" layoutX="258.0" layoutY="87.0" prefHeight="156.0" prefWidth="210.0" textAlignment="CENTER" wrapText="true">
+      <ListView fx:id="inputlist" layoutX="130.0" layoutY="105.0" prefHeight="210.0" prefWidth="98.0" />
+      <Label layoutX="156.0" layoutY="57.0" prefHeight="22.0" prefWidth="46.0" text="INPUT" />
+      <Label fx:id="measuretype" alignment="CENTER" layoutX="263.0" layoutY="68.0" prefHeight="37.0" prefWidth="125.0">
+         <font>
+            <Font name="Centaur" size="14.0" />
+         </font></Label>
+      <Label fx:id="outlabel" alignment="CENTER" layoutX="263.0" layoutY="68.0" prefHeight="210.0" prefWidth="263.0" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Constantia" size="12.0" />
          </font></Label>
-      <ListView fx:id="numlist" layoutX="40.0" layoutY="87.0" prefHeight="210.0" prefWidth="98.0" />
-      <Label layoutX="46.0" layoutY="57.0" prefHeight="22.0" prefWidth="86.0" text="INPUT NUMBER" />
-      <Label fx:id="title" alignment="CENTER" layoutX="46.0" layoutY="14.0" prefHeight="37.0" prefWidth="388.0" wrapText="true">
+      <ListView fx:id="numlist" layoutX="32.0" layoutY="105.0" prefHeight="210.0" prefWidth="98.0" />
+      <Label layoutX="38.0" layoutY="57.0" prefHeight="22.0" prefWidth="86.0" text="INPUT NUMBER" />
+      <Label fx:id="title" alignment="CENTER" layoutX="107.0" layoutY="20.0" prefHeight="37.0" prefWidth="388.0" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Century Gothic" size="13.0" />
          </font>
       </Label>
+      <Button fx:id="back1" layoutX="395.0" layoutY="290.0" mnemonicParsing="false" onAction="#measureChoice" prefHeight="37.0" prefWidth="71.0" text="Back">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <ColorAdjust hue="-0.79" saturation="0.39" />
+         </effect>
+      </Button>
    </children>
 </AnchorPane>

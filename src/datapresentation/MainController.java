@@ -181,12 +181,12 @@ public class MainController implements Initializable {
         main.setScene(scene);
         main.show();        
         GlobalContext.f3 = false;
+        GlobalContext.f1 = false;
     }
         
     @FXML
     private void handleEnterInputAction(ActionEvent event) throws IOException {
-        String text = dataField.getText();
-        GlobalContext.f1 = false;
+        String text = dataField.getText();        
         
         if(GlobalContext.counter == 0) {
             Validation.setValidation(text);
@@ -220,11 +220,13 @@ public class MainController implements Initializable {
                     bar1.valueProperty().bindBidirectional(bar2.valueProperty());                    
                 }
             }
+            GlobalContext.f1 = false;
         } else {
             errorMessage1.setText("Invalid input");
         }
     }
     
+//    differentiate top class and bottom class
     @FXML
     private void handleChangeInTableInput(ActionEvent event) {        
         GlobalContext.openEndedSetting = (GlobalContext.openEndedSetting) ? false : true;
@@ -392,6 +394,7 @@ public class MainController implements Initializable {
         root = FXMLLoader.load(getClass().getResource("/statisticalpackage/MainMenu.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.show();
+        stage.show();        
+        GlobalContext.f1 = false;
     }
 }

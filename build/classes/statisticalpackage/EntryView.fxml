@@ -4,29 +4,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="mainPane" onKeyPressed="#handleProceedAction1" onKeyTyped="#handleProceedAction1" prefHeight="408.0" prefWidth="614.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="statisticalpackage.MainStatisticalPackageController">
+<AnchorPane id="AnchorPane" onMouseClicked="#handleProceedAction1" prefHeight="408.0" prefWidth="614.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="statisticalpackage.MainStatisticalPackageController">
    <children>
-      <Label layoutX="225.0" layoutY="65.0" onKeyPressed="#handleProceedAction1" text="3SC Mini-Package">
+      <Label layoutX="225.0" layoutY="65.0" text="3SC Mini-Package">
          <font>
             <Font name="Cambria Bold" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="171.0" layoutY="147.0" onKeyPressed="#handleProceedAction1" onKeyTyped="#handleProceedAction1" prefHeight="135.0" prefWidth="302.0" text="Choose the first option to simulate a sampling method package. Simulate the second for a data presentation package. Finally, the third selection gives you options for summary measures." textAlignment="CENTER" wrapText="true">
+      <Label layoutX="171.0" layoutY="147.0" prefHeight="135.0" prefWidth="302.0" text="Choose the first option to simulate a sampling method package. Simulate the second for a data presentation package. Finally, the third selection gives you options for summary measures." textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Calibri Bold" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="280.0" layoutY="340.0" onKeyPressed="#handleProceedAction1" prefHeight="30.0" prefWidth="105.0" text="MIchael Loewe L. Alivio" textAlignment="CENTER" wrapText="true">
+      <Label layoutX="280.0" layoutY="340.0" prefHeight="30.0" prefWidth="105.0" text="MIchael Loewe L. Alivio" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Calibri" size="10.0" />
          </font>
       </Label>
-      <Label layoutX="281.0" layoutY="356.0" onKeyPressed="#handleProceedAction1" prefHeight="30.0" prefWidth="105.0" text="Juan Carlos T. Roldan" textAlignment="CENTER" wrapText="true">
+      <Label layoutX="281.0" layoutY="356.0" prefHeight="30.0" prefWidth="105.0" text="Juan Carlos T. Roldan" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Calibri" size="10.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="239.0" layoutY="300.0" onKeyPressed="#handleProceedAction1" prefHeight="30.0" prefWidth="165.0" text="Press &quot;enter&quot; to continue!" textAlignment="CENTER" wrapText="true">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="239.0" layoutY="300.0" prefHeight="30.0" prefWidth="185.0" text="Click anywhere to continue!" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Calibri" size="15.0" />
          </font>

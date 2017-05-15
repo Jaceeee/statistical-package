@@ -69,7 +69,7 @@ public class MeasuresController implements Initializable {
     @FXML
     public void backToMainMenuAction() throws IOException {
         stage = (Stage) proceed2.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("MainTemplate.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/statisticalpackage/MainMenu.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

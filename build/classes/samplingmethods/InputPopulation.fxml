@@ -1,26 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="348.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="samplingmethods.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="354.0" prefWidth="484.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="samplingmethods.FXMLDocumentController">
    <children>
-      <TextField fx:id="inputPopulationFrame" layoutX="105.0" layoutY="150.0" onKeyPressed="#enterListener" />
-      <Button fx:id="enterInputButton" layoutX="154.0" layoutY="188.0" mnemonicParsing="false" onAction="#enterInput" text="Enter" />
-      <Label layoutX="121.0" layoutY="58.0" text="Input Sampling Frame" />
-      <Button fx:id="proceedSampling" layoutX="400.0" layoutY="297.0" mnemonicParsing="false" onAction="#proceedSamplingFrame" text="Next" />
-      <Button fx:id="backFromInputFrame" layoutX="344.0" layoutY="297.0" mnemonicParsing="false" onAction="#returnFromInputFrame" text="Back" />
-      <Label fx:id="inputsRemaining" layoutX="118.0" layoutY="125.0" text="Inputs remaining:" />
-      <Label fx:id="errorMessage2" layoutX="320.0" layoutY="337.0" prefHeight="17.0" prefWidth="207.0" textFill="#f81c1c">
+      <TextField fx:id="inputPopulationFrame" layoutX="48.0" layoutY="138.0" onKeyPressed="#enterListener" />
+      <Button fx:id="enterInputButton" layoutX="88.0" layoutY="177.0" mnemonicParsing="false" onAction="#enterInput" prefHeight="36.0" prefWidth="70.0" text="Enter">
+         <effect>
+            <ColorAdjust hue="-0.79" saturation="0.39" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Label alignment="CENTER" layoutX="122.0" layoutY="24.0" prefHeight="25.0" prefWidth="237.0" text="Input Sampling Frame">
+         <font>
+            <Font name="Century Gothic" size="14.0" />
+         </font></Label>
+      <Button fx:id="proceedSampling" layoutX="245.0" layoutY="292.0" mnemonicParsing="false" onAction="#proceedSamplingFrame" prefHeight="36.0" prefWidth="70.0" text="Next">
+         <effect>
+            <ColorAdjust hue="-0.79" saturation="0.39" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="backFromInputFrame" layoutX="362.0" layoutY="292.0" mnemonicParsing="false" onAction="#returnFromInputFrame" prefHeight="36.0" prefWidth="70.0" text="Back">
+         <effect>
+            <ColorAdjust hue="-0.79" saturation="0.39" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Label fx:id="inputsRemaining" layoutX="76.0" layoutY="112.0" text="Inputs remaining:" />
+      <Label fx:id="errorMessage2" layoutX="19.0" layoutY="297.0" prefHeight="25.0" prefWidth="207.0" textFill="#f81c1c">
          <font>
             <Font name="Tahoma" size="12.0" />
          </font>
       </Label>
-      <ListView fx:id="samplingFrameListView" layoutX="450.0" layoutY="63.0" prefHeight="200.0" prefWidth="106.0" />
-      <ListView fx:id="indexFrameListView" layoutX="321.0" layoutY="63.0" prefHeight="200.0" prefWidth="129.0" />
+      <ListView fx:id="samplingFrameListView" layoutX="344.0" layoutY="63.0" prefHeight="200.0" prefWidth="106.0" />
+      <ListView fx:id="indexFrameListView" layoutX="215.0" layoutY="63.0" prefHeight="200.0" prefWidth="129.0" />
    </children>
 </AnchorPane>

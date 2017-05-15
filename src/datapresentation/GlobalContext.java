@@ -131,6 +131,8 @@ public class GlobalContext {
         } else if(numericChoice) {            
             numericArray = new float[n];
             
+            setSmallestPlaceValue(categoricalArray[0]);
+            System.out.println(fracDigits);
 //            populating the numeric array
             for(int i = 0; i<n; i++){
                 numericArray[i] = Float.parseFloat(categoricalArray[i]);
@@ -168,8 +170,7 @@ public class GlobalContext {
             if(numericArray[i] < min){
                 min = numericArray[i];
             }
-        }
-        setSmallestPlaceValue(min);
+        }        
         return min;
     }
     
@@ -187,7 +188,7 @@ public class GlobalContext {
     public static float getLowerBound(int i) {
         DecimalFormat df = new DecimalFormat("#.###");
         df.setRoundingMode(RoundingMode.HALF_UP);        
-        fracDigits = numberOfFractionalDigits(getMinimum());
+        fracDigits = getNumberOfFractionalDigits(getMinimum());
         df.setMaximumFractionDigits(fracDigits);
         return (i != 0) ? Float.parseFloat(df.format(getUpperBound(i-1) + getSmallestPlaceValue() * ((inputType == 4) ? 100 : 10))) : getMinimum();
     }
@@ -200,7 +201,7 @@ public class GlobalContext {
     }
     
     private static float padZeros(float value) {
-        int num = getNumberOfFractionDigits(value);
+        int num = getNumberOfFractionalDigits(value);
         String tmp = Float.toString(value);
         if(!checkPointPresence(tmp)){
             tmp += '.';
@@ -220,22 +221,14 @@ public class GlobalContext {
         }
         return false;
     }
-    private static int getNumberOfFractionDigits(float value) {
+    private static int getNumberOfFractionalDigits(float value) {
         int ct = 0;
         while(value - Math.floor(value) > 0){
             value*=10;
             ct++;
         }        
         return ct;
-    }
-    private static int numberOfFractionalDigits(float i){
-        int ct = 0;
-        while(i - Math.floor(i) > 0) {
-            i*=10;
-            ct++;
-        }
-        return ct;
-    }
+    }    
     
     public static float getClassWidth() {
 //        TODO
@@ -252,18 +245,19 @@ public class GlobalContext {
         return (getUpperBound(i) + getLowerBound(i)) / 2;
     }
     
-    public static void setSmallestPlaceValue(float value) {
-        float d = 1;
-        boolean t = ((value / d) % 1) == 0;        
-        while(!t) {
-            d *= 0.1;            
-            t = ((value / d) % 1) == 0;            
-            if(digitsChk) {
-                fracDigits++;
+    public static void setSmallestPlaceValue(String value) {
+        int i = value.length() - 1;        
+        while(i >= 0 && value.charAt(i) != '.'){
+            i--;
+        }
+        if(i > 0) {
+            fracDigits = value.length() - i - 1;
+            for(int j = 0; j<smallestPlaceValue; j++){
+                smallestPlaceValue/=10;
             }
-        }                      
-        digitsChk = false;
-        smallestPlaceValue = (float) (d * 0.1);
+        } else {
+            fracDigits = 0;
+        }
     }
     
     public static float getSmallestPlaceValue() {        
@@ -272,23 +266,21 @@ public class GlobalContext {
     
     public static float getTrueLowerClassLimit(int i) {
         float lowerBound = getLowerBound(i);        
-        return lowerBound - (getSmallestPlaceValue() * (inputType == 4 ? 50 : 5));
+        return lowerBound - (getSmallestPlaceValue() / 2);
     }
     
     public static float getTrueUpperClassLimit(int i) {
         float upperBound = getUpperBound(i);
-        return upperBound + (getSmallestPlaceValue() * (inputType == 4 ? 50 : 5));
+        return upperBound + (getSmallestPlaceValue() / 2);
     }
     
     public static int getFrequency(float lowerClassLimit, float upperClassLimit) {
-        int frequency = 0;
-        
+        int frequency = 0;        
         for(int i = 0; i<n; i++){
             if(numericArray[i] >= lowerClassLimit && numericArray[i] < upperClassLimit) {
                 frequency++;
             }
-        }
-        
+        }        
         return frequency;
     }
     

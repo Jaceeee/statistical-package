@@ -206,7 +206,7 @@ public class FXMLDocumentController implements Initializable {
         mainMenu = (Stage) returnToHome.getScene().getWindow();
         
         //load up other FXML Document
-        root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/statisticalpackage/MainMenu.fxml"));
         
         Scene scene = new Scene(root);
         mainMenu.setScene(scene);

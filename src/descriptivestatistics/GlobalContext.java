@@ -15,7 +15,8 @@ import java.util.Arrays;
 public class GlobalContext {
     public static final GlobalContext gc = new GlobalContext();
     public static boolean groupedChoice = false;
-    public static boolean ungroupedChoice = false;    
+    public static boolean ungroupedChoice = false;
+    
     public static boolean modechoice = false;
     public static boolean medianchoice = false;
     public static boolean meanchoice = false;
@@ -55,7 +56,9 @@ public class GlobalContext {
     public static boolean ungroupedOption;
     
     public static float classWidth;
-        
+    public static boolean checkback;
+
+    
     private GlobalContext() {
     }
     
@@ -83,6 +86,12 @@ public class GlobalContext {
             return true;
         }
     }            
+ 
+    public static double getRange(){
+        double min = Double.parseDouble(categoricalArray[0]);
+        double max = Double.parseDouble(categoricalArray[n-1]);
+        return max - min;
+    }
     
     public static void setGroupedDataPlaceholder() {
         groupedData = new GroupedData[n];
@@ -166,15 +175,14 @@ public class GlobalContext {
                     Float.parseFloat(groupedData[modalClass].getFrequency()) &&
                     f1 == false){
                 f1 = true;
-            } else if(Float.parseFloat(groupedData[i].getFrequency()) > 
+            } if(Float.parseFloat(groupedData[i].getFrequency()) > 
                     Float.parseFloat(groupedData[modalClass].getFrequency())){
                 modalClass = i;
                 modalClasses = Integer.toString(i+1);
                 modalCounter = 0;                
-            } else if(Float.parseFloat(groupedData[i].getFrequency()) == 
+            } if(Float.parseFloat(groupedData[i].getFrequency()) == 
                     Float.parseFloat(groupedData[modalClass].getFrequency())) {                                                
                 modalCounter++;
-                modalClasses += ", " + Integer.toString(i+1);
             }
         }
         if(f1){
@@ -210,8 +218,7 @@ public class GlobalContext {
         n = 0;
         inputType = 0;
         title = "";
-       // categoricalData = new Data[0];
-       // numericData = new Data[0];
+        checkback = false;
         categoricalArray = new String[0];
         numberArray = new Integer[0];
         counter = 0;
@@ -275,7 +282,6 @@ public class GlobalContext {
         float sum = 0;
         for(int i = 0; i < n; i++){
             sum += (Float.parseFloat(categoricalArray[i]));
-            System.out.println(Float.parseFloat(categoricalArray[i]) + " float");
         }
         sum = sum / n;
         return sum;
@@ -285,7 +291,6 @@ public class GlobalContext {
         float sum = 0;
         float mean = getMean();
         for(int i = 0; i < n; i++){
-            System.out.println(i + " mao ni si i");
             sum += (Math.pow((Float.parseFloat(categoricalArray[i]) - mean),2)); 
         }
         sum /= (n - 1);
@@ -398,7 +403,6 @@ public class GlobalContext {
                }
            }
            a[i] = new Float(((float)counter/(float)n));
-           System.out.println(a[i] + " hello???!");
        }
        return a;
    }
