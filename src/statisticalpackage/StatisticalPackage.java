@@ -21,6 +21,9 @@ public class StatisticalPackage extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+        String s = "4.0";
+        float st = Float.parseFloat(s);
+        System.out.println("ST:" + st);
         Parent root = FXMLLoader.load(getClass().getResource("EntryView.fxml"));        
         Scene scene = new Scene(root);        
         stage.setScene(scene);

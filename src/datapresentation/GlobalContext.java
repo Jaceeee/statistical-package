@@ -33,6 +33,8 @@ public class GlobalContext {
     public static int fracDigits;    
     private static boolean digitsChk;
     private static float smallestPlaceValue;    
+    public static boolean topClassOpen;
+    public static boolean bottomClassOpen;
     
     public GlobalContext getInstance(){
         return gc;
@@ -41,6 +43,8 @@ public class GlobalContext {
     public static void initialize(){
         numericChoice = false;
         categoricalChoice = false;
+        topClassOpen = false;
+        bottomClassOpen = false;
         n = 0;
         inputType = 0;
         title = "";
@@ -119,7 +123,7 @@ public class GlobalContext {
        return a;
    }
    
-    public static void setData(boolean openEndedSetting){
+    public static void setData(boolean top, boolean bottom){
         if(categoricalChoice){
             String[] valueLabels = removeDuplicates();
             Float[] percentages = percentageComp();
@@ -142,12 +146,18 @@ public class GlobalContext {
             
             for(int i = 0; i<getNumOfClasses(); i++){
                 String[] dataPiece = combineNumericData(i).split(":");
-                if(openEndedSetting && (i == 0 || i == getNumOfClasses() - 1)) { 
-                    dataPiece[0] = (i == 0) ? returnLowerOpenEndedData(dataPiece[0])
-                            : returnUpperOpenEndedData(dataPiece[0]);
-                    dataPiece[1] = "---";
-                    dataPiece[2] = "---";
-                }
+                if(top || bottom){
+                    if(bottom && i == 0) {
+                        dataPiece[0] = returnLowerOpenEndedData(dataPiece[0]);                    
+                        dataPiece[1] = "---";
+                        dataPiece[2] = "---";
+                    } else if(top && i == getNumOfClasses() - 1) {
+                        dataPiece[0] = returnUpperOpenEndedData(dataPiece[0]);
+                        dataPiece[1] = "---";
+                        dataPiece[2] = "---";
+                    }
+                    
+                }                                
                 
                 numericData[i] = new Data(dataPiece[0],
                                           dataPiece[1],
@@ -187,28 +197,30 @@ public class GlobalContext {
     
     public static float getLowerBound(int i) {
         DecimalFormat df = new DecimalFormat("#.###");
-        df.setRoundingMode(RoundingMode.HALF_UP);        
-        fracDigits = getNumberOfFractionalDigits(getMinimum());
+        df.setRoundingMode(RoundingMode.HALF_UP);                
         df.setMaximumFractionDigits(fracDigits);
-        return (i != 0) ? Float.parseFloat(df.format(getUpperBound(i-1) + getSmallestPlaceValue() * ((inputType == 4) ? 100 : 10))) : getMinimum();
+        return (i != 0) ? Float.parseFloat(df.format(getUpperBound(i-1) + getSmallestPlaceValue())) : getMinimum();
     }
     
     public static float getUpperBound(int i){
         DecimalFormat df = new DecimalFormat("#.###");        
-        df.setRoundingMode(RoundingMode.CEILING);                
+        df.setRoundingMode(RoundingMode.HALF_UP);
         df.setMaximumFractionDigits(fracDigits);        
-        return padZeros((float) (getLowerBound(i) + Float.parseFloat(df.format((getClassWidth()) - 10*getSmallestPlaceValue()))));
+        return padZeros((float) (getLowerBound(i) + ((fracDigits > 1) ? (Math.round(getClassWidth() * (fracDigits-1))) / (fracDigits-1) : 
+                getClassWidth())));
     }
     
     private static float padZeros(float value) {
-        int num = getNumberOfFractionalDigits(value);
         String tmp = Float.toString(value);
-        if(!checkPointPresence(tmp)){
-            tmp += '.';
-        }
-        if(num < fracDigits) {
-            tmp+='0';
-            num++;
+        if(inputType == 4){
+            int num = getNumberOfFractionalDigits(value);            
+            if(!checkPointPresence(tmp)){
+                tmp += '.';
+            }
+            if(num < fracDigits) {
+                tmp+='0';
+                num++;
+            }            
         }
         return Float.parseFloat(tmp);
     }
@@ -246,18 +258,20 @@ public class GlobalContext {
     }
     
     public static void setSmallestPlaceValue(String value) {
+        smallestPlaceValue = 1;
         int i = value.length() - 1;        
         while(i >= 0 && value.charAt(i) != '.'){
             i--;
         }
-        if(i > 0) {
-            fracDigits = value.length() - i - 1;
-            for(int j = 0; j<smallestPlaceValue; j++){
-                smallestPlaceValue/=10;
+        if(i > 0) {            
+            fracDigits = value.length() - i - 1;            
+            for(int j = 0; j<fracDigits; j++){                
+                smallestPlaceValue = smallestPlaceValue / 10;                
             }
         } else {
             fracDigits = 0;
         }
+        System.out.println("smallest PV: " + smallestPlaceValue);
     }
     
     public static float getSmallestPlaceValue() {        
@@ -265,7 +279,7 @@ public class GlobalContext {
     }        
     
     public static float getTrueLowerClassLimit(int i) {
-        float lowerBound = getLowerBound(i);        
+        float lowerBound = getLowerBound(i);                
         return lowerBound - (getSmallestPlaceValue() / 2);
     }
     
@@ -304,8 +318,10 @@ public class GlobalContext {
         // class limits
         DecimalFormat df = new DecimalFormat("#.###");
         df.setRoundingMode(RoundingMode.HALF_UP);
+        System.out.println("DF.Format: " + Float.parseFloat(df.format(getLowerBound(i))));
         
-        String comb = String.format("%s-%s", padZeros(Float.parseFloat(df.format(getLowerBound(i)))), padZeros(Float.parseFloat(df.format(getUpperBound(i))))) + ":";
+        String comb = String.format("%s-%s", (inputType == 4) ? padZeros(Float.parseFloat(df.format(getLowerBound(i)))) : df.format(getLowerBound(i)), 
+                (inputType == 4) ? padZeros(Float.parseFloat(df.format(getUpperBound(i)))) : df.format(getUpperBound(i))) + ":";
         // true class limits
         comb += String.format("%s-%s", df.format(getTrueLowerClassLimit(i)), df.format(getTrueUpperClassLimit(i))) + ":";
         // midpoint

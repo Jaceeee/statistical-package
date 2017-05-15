@@ -83,6 +83,8 @@ public class MainController implements Initializable {
     @FXML private Label frequencyDistributionTableLabel;
     @FXML private TableView<datapresentation.Data> summaryTableView;
     @FXML private TableView<datapresentation.Data> frequencyDistributionTableView;
+    @FXML private Button openEndedUpper;
+    @FXML private Button openEndedLower;
     
 //    Summary Table
     @FXML private TableColumn<datapresentation.Data, String> valueLabel;
@@ -229,19 +231,20 @@ public class MainController implements Initializable {
 //    differentiate top class and bottom class
     @FXML
     private void handleChangeInTableInput(ActionEvent event) {        
-        GlobalContext.openEndedSetting = (GlobalContext.openEndedSetting) ? false : true;
-        GlobalContext.setData(GlobalContext.openEndedSetting);                        
-        setFrequencyDistributionTable();
-        if(GlobalContext.openEndedSetting){
-            distributionTableSwitch.setText("Collapse table");    
-        } else {
-            distributionTableSwitch.setText("Show open ended distribution");
+        if(event.getSource() == openEndedUpper) {            
+            GlobalContext.topClassOpen = (GlobalContext.topClassOpen) ? false : true;
+        } else if(event.getSource() == openEndedLower) {            
+            GlobalContext.bottomClassOpen = (GlobalContext.bottomClassOpen) ? false : true;
         }
         
+        GlobalContext.setData(GlobalContext.topClassOpen, GlobalContext.bottomClassOpen);                        
+        setFrequencyDistributionTable();        
+        openEndedUpper.setText((GlobalContext.topClassOpen) ? "Collapse Upper" : "Upper Class");            
+        openEndedLower.setText((GlobalContext.bottomClassOpen) ? "Collapse Lower" : "Lower Class");        
         frequencyDistributionTableView.setItems(tableList);
         frequencyDistributionTableView.setVisible(true);
         frequencyDistributionTableLabel.setText(GlobalContext.title);
-    }
+    }        
             
     @FXML
     public void enterListener(KeyEvent e){
@@ -301,7 +304,7 @@ public class MainController implements Initializable {
             title.setText(GlobalContext.title);
         }
         if(GlobalContext.f2) {
-            GlobalContext.setData(GlobalContext.openEndedSetting);
+            GlobalContext.setData(GlobalContext.topClassOpen, GlobalContext.bottomClassOpen);
             
             if(GlobalContext.categoricalChoice) {
                 setSummaryTable();

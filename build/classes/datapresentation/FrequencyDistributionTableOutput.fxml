@@ -50,12 +50,31 @@
             <Font name="Arial Black" size="12.0" />
          </font>
       </Label>
-      <Button fx:id="distributionTableSwitch" layoutX="20.0" layoutY="397.0" mnemonicParsing="false" onAction="#handleChangeInTableInput" prefHeight="25.0" prefWidth="123.0" text="Show open ended">
+      <Button fx:id="openEndedLower" layoutX="19.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleChangeInTableInput" prefHeight="19.0" prefWidth="74.0" text="Lower Class">
          <effect>
             <ColorAdjust hue="-0.79" saturation="0.39" />
          </effect>
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></Button>
+         </cursor>
+         <font>
+            <Font size="9.0" />
+         </font></Button>
+      <Button fx:id="openEndedUpper" layoutX="99.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleChangeInTableInput" prefHeight="19.0" prefWidth="74.0" text="Upper Class">
+         <effect>
+            <ColorAdjust hue="-0.79" saturation="0.39" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Button>
+      <Label layoutX="43.0" layoutY="395.0" text="Open Ended Settings">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
