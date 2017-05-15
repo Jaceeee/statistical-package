@@ -34,10 +34,14 @@ public class MeasuresController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if(GlobalContext.meanOption){
-            if(GlobalContext.closeEndedOption)
-                meanLabel.setText("Mean = " + GlobalContext.groupedMean + "\n" + 
-                                            "Variance = " + GlobalContext.groupedVariance + "\n" +
-                                            "Standard Deviation = " + GlobalContext.groupedStandardDeviation);
+            if(GlobalContext.closeEndedOption){
+                String gm = String.format("%.2f", GlobalContext.groupedMean);
+                String gv = String.format("%.2f", GlobalContext.groupedVariance);
+                String gsd = String.format("%.2f", GlobalContext.groupedStandardDeviation);
+                meanLabel.setText("Mean = " + gm + "\n" + 
+                                            "Variance = " + gv + "\n" +
+                                            "Standard Deviation = " + gsd);
+            }
             else {
                 meanLabel.setText("Cannot compute, open-ended setting.");
             }
@@ -68,6 +72,8 @@ public class MeasuresController implements Initializable {
     
     @FXML
     public void backToMainMenuAction() throws IOException {
+        GlobalContext.closeEndedOption = false;
+        GlobalContext.openEndedOption = false;
         stage = (Stage) proceed2.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource("/statisticalpackage/MainMenu.fxml"));
         Scene scene = new Scene(root);

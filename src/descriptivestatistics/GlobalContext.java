@@ -179,9 +179,10 @@ public class GlobalContext {
                     Float.parseFloat(groupedData[modalClass].getFrequency())){
                 modalClass = i;
                 modalClasses = Integer.toString(i+1);
-                modalCounter = 0;                
-            } if(Float.parseFloat(groupedData[i].getFrequency()) == 
-                    Float.parseFloat(groupedData[modalClass].getFrequency())) {                                                
+                modalCounter = 1;                
+            } else if(Float.parseFloat(groupedData[i].getFrequency()) == 
+                    Float.parseFloat(groupedData[modalClass].getFrequency())) {
+                modalClasses += ", " + (Integer.toString(i+1));
                 modalCounter++;
             }
         }

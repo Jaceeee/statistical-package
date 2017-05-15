@@ -26,23 +26,29 @@
             <TableColumn fx:id="crossProduct2" prefWidth="99.0" text="f * [ (Xm) ^ 2 ]" />
         </columns>
       </TableView>
-      <Button fx:id="proceed" layoutX="387.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleProceedAction" prefHeight="25.0" prefWidth="70.0" text="Proceed">
+      <Button fx:id="proceed" layoutX="423.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleProceedAction" prefHeight="25.0" prefWidth="70.0" text="Proceed">
          <effect>
             <ColorAdjust hue="-0.79" saturation="0.36" />
          </effect>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button fx:id="edit" layoutX="475.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleEditDialogOption" prefHeight="25.0" prefWidth="60.0" text="Edit">
+      <Button fx:id="edit" layoutX="511.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleEditDialogOption" prefHeight="25.0" prefWidth="60.0" text="Edit">
          <effect>
             <ColorAdjust hue="-0.79" saturation="0.36" />
          </effect>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Label fx:id="firstCrossProductTotal" layoutX="571.0" layoutY="358.0" prefHeight="17.0" prefWidth="48.0" />
-      <Label fx:id="secondCrossProductTotal" layoutX="535.0" layoutY="340.0" prefHeight="17.0" prefWidth="60.0" />
-      <Button fx:id="back" layoutX="69.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="25.0" prefWidth="60.0" text="Back">
+      <Label fx:id="firstCrossProductTotal" layoutX="552.0" layoutY="340.0" prefHeight="17.0" prefWidth="48.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="secondCrossProductTotal" layoutX="445.0" layoutY="340.0" prefHeight="17.0" prefWidth="60.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Button fx:id="back" layoutX="67.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="25.0" prefWidth="60.0" text="Back">
          <effect>
             <ColorAdjust hue="-0.79" saturation="0.36" />
          </effect>

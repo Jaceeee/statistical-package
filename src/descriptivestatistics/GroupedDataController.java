@@ -124,12 +124,20 @@ public class GroupedDataController implements Initializable {
                             GlobalContext.classWidth = Integer.parseInt(inputB) - Integer.parseInt(inputA);
                         }                                
                         else{
-                            GlobalContext.classWidth = Float.parseFloat(inputB) - Float.parseFloat(inputA);
+                            String st = String.format("%.2f", Float.parseFloat(inputB) - Float.parseFloat(inputA));
+                            GlobalContext.classWidth = Float.parseFloat(st);
+                            
                         }
                         counter++;
                     } else {
-                        if((GlobalContext.inputType == 3 && Integer.parseInt(inputB) - Integer.parseInt(inputA) != GlobalContext.classWidth)
-                                || (GlobalContext.inputType == 4 && Float.parseFloat(inputB) - Float.parseFloat(inputA) != GlobalContext.classWidth)){
+                        String diff = String.format((GlobalContext.inputType == 3) ? "%d": "%.2f", 
+                                (GlobalContext.inputType == 3) 
+                                ? Integer.parseInt(inputB) - Integer.parseInt(inputA) 
+                                : Float.parseFloat(inputB) - Float.parseFloat(inputA));
+                        if((GlobalContext.inputType == 3 && Integer.parseInt(diff) != GlobalContext.classWidth)
+                                || (GlobalContext.inputType == 4 && Float.parseFloat(diff) != GlobalContext.classWidth)){
+                            System.out.println("CW: " + GlobalContext.classWidth);
+                            System.out.println("Difference: " + (Float.parseFloat(inputB) - Float.parseFloat(inputA)));
                             errorMessage.setText("There's something wrong with input.");
                             GlobalContext.groupedData[counter] = new GroupedData("0","0","0");
                         } else {

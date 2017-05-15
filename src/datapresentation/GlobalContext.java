@@ -205,8 +205,10 @@ public class GlobalContext {
     public static float getUpperBound(int i){
         DecimalFormat df = new DecimalFormat("#.###");        
         df.setRoundingMode(RoundingMode.HALF_UP);
-        df.setMaximumFractionDigits(fracDigits);        
-        return padZeros((float) (getLowerBound(i) + ((fracDigits > 1) ? (Math.round(getClassWidth() * (fracDigits-1))) / (fracDigits-1) : 
+        df.setMaximumFractionDigits(fracDigits);
+        int tmpDig = getCWFracDigits();
+        System.out.println("tmpDig: " + tmpDig);
+        return padZeros((float) (getLowerBound(i) + ((tmpDig > 1) ? (Math.round(getClassWidth() * Math.pow(10, (tmpDig-1)))) / Math.pow(10, (tmpDig-1)) : 
                 getClassWidth())));
     }
     
@@ -270,9 +272,18 @@ public class GlobalContext {
             }
         } else {
             fracDigits = 0;
-        }
-        System.out.println("smallest PV: " + smallestPlaceValue);
+        }        
     }
+    
+    public static int getCWFracDigits() {
+        String cw = Float.toString(getClassWidth());
+        int ct = 0;
+        for(int i = cw.length()-1; i>0 && cw.charAt(i) != '.'; i--){
+            ct++;
+        }
+        return ct;
+    }
+            
     
     public static float getSmallestPlaceValue() {        
         return smallestPlaceValue;
@@ -317,8 +328,7 @@ public class GlobalContext {
     public static String combineNumericData(int i) {
         // class limits
         DecimalFormat df = new DecimalFormat("#.###");
-        df.setRoundingMode(RoundingMode.HALF_UP);
-        System.out.println("DF.Format: " + Float.parseFloat(df.format(getLowerBound(i))));
+        df.setRoundingMode(RoundingMode.HALF_UP);        
         
         String comb = String.format("%s-%s", (inputType == 4) ? padZeros(Float.parseFloat(df.format(getLowerBound(i)))) : df.format(getLowerBound(i)), 
                 (inputType == 4) ? padZeros(Float.parseFloat(df.format(getUpperBound(i)))) : df.format(getUpperBound(i))) + ":";
