@@ -108,6 +108,7 @@ public class GroupedDataController implements Initializable {
         );
     }  
     
+    @FXML
     public void handleProceedAction(ActionEvent event) throws IOException {
         if (counter < GlobalContext.n){            
             if(lowerClassLimitInput.getText() != "" && upperClassLimitInput.getText() != "" && frequencyInput.getText() != ""){                
@@ -120,7 +121,7 @@ public class GroupedDataController implements Initializable {
                                                                 inputB, 
                                                                 inputC);
                     if(counter == 0) {
-                        if(GlobalContext.inputType == 3){
+                        if(GlobalContext.inputType == 3) {
                             GlobalContext.classWidth = Integer.parseInt(inputB) - Integer.parseInt(inputA);
                         }                                
                         else{
@@ -128,16 +129,17 @@ public class GroupedDataController implements Initializable {
                             GlobalContext.classWidth = Float.parseFloat(st);
                             
                         }
-                        counter++;
+                        counter++;                        
                     } else {
-                        String diff = String.format((GlobalContext.inputType == 3) ? "%d": "%.2f", 
-                                (GlobalContext.inputType == 3) 
-                                ? Integer.parseInt(inputB) - Integer.parseInt(inputA) 
-                                : Float.parseFloat(inputB) - Float.parseFloat(inputA));
+                        String diff;
+                        if(GlobalContext.inputType == 3) {
+                            diff = String.format("%d", (Integer.parseInt(inputB) - Integer.parseInt(inputA)));
+                        } else {
+                            diff = String.format("%.2f", (Float.parseFloat(inputB) - Float.parseFloat(inputA)));
+                        }                        
                         if((GlobalContext.inputType == 3 && Integer.parseInt(diff) != GlobalContext.classWidth)
-                                || (GlobalContext.inputType == 4 && Float.parseFloat(diff) != GlobalContext.classWidth)){
-                            System.out.println("CW: " + GlobalContext.classWidth);
-                            System.out.println("Difference: " + (Float.parseFloat(inputB) - Float.parseFloat(inputA)));
+                                || (GlobalContext.inputType == 4 && Float.parseFloat(diff) != GlobalContext.classWidth)) {
+                            System.out.println(diff + " " + GlobalContext.classWidth);
                             errorMessage.setText("There's something wrong with input.");
                             GlobalContext.groupedData[counter] = new GroupedData("0","0","0");
                         } else {
@@ -186,5 +188,7 @@ public class GroupedDataController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        GlobalContext.openEndedOption = false;
+        GlobalContext.closeEndedOption = false;        
     }
 }

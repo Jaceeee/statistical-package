@@ -188,31 +188,26 @@ public class MainController implements Initializable {
         
     @FXML
     private void handleEnterInputAction(ActionEvent event) throws IOException {
-        String text = dataField.getText();        
-        
+        String text = dataField.getText();                
         if(GlobalContext.counter == 0) {
             Validation.setValidation(text);
             GlobalContext.f1 = GlobalContext.inputType < 5;
         } else {
             GlobalContext.f1 = Validation.validate(text);
-        }
-        
+        }        
         if(GlobalContext.f1) {
             GlobalContext.categoricalArray[GlobalContext.counter] = text;     
             itemList = FXCollections.observableArrayList(GlobalContext.categoricalArray);
-            inputDisplay.setItems(itemList);
-            
+            inputDisplay.setItems(itemList);            
             GlobalContext.numberArray[GlobalContext.counter++] = new Integer(GlobalContext.counter);
             ObservableList<Integer> tmpList = FXCollections.observableArrayList(GlobalContext.numberArray);
-            numbers.setItems(tmpList);
-            
+            numbers.setItems(tmpList);            
             if(GlobalContext.counter == GlobalContext.n) {
                 dataField.setEditable(false);
                 enter.setDisable(true);
             }
             dataField.setText("");
-            errorMessage1.setText("");
-            
+            errorMessage1.setText("");            
             Node n1 = inputDisplay.lookup(".scroll-bar");
             if (n1 instanceof ScrollBar) {
                 final ScrollBar bar1 = (ScrollBar) n1;
@@ -328,8 +323,7 @@ public class MainController implements Initializable {
                 for(datapresentation.Data d : GlobalContext.categoricalData) {
                     tempList.add(new PieChart.Data(d.getValueLabel() + "\n" + (d.getPercentage()) + "%", 
                             d.getPercentage()));
-                }
-                
+                }                
                 pieChart.setData(tempList);
                 pieChart.setLegendVisible(false);
                 pieChartLabel.setText(GlobalContext.title);

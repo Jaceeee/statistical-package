@@ -26,11 +26,9 @@ public class MeasuresController implements Initializable {
     Parent root;
     @FXML private Label meanLabel;    
     @FXML private Label modeLabel;
-    @FXML private Label medianLabel;
-    
+    @FXML private Label medianLabel;    
     @FXML private Button proceed1;
-    @FXML private Button proceed2;
-    
+    @FXML private Button proceed2;    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if(GlobalContext.meanOption){
@@ -59,8 +57,7 @@ public class MeasuresController implements Initializable {
         System.out.println(GlobalContext.meanOption + "\n" 
                         + GlobalContext.medianOption + "\n"
                         + GlobalContext.modeOption);
-    }
-    
+    }    
     @FXML
     public void backToTableAction() throws IOException {
         stage = (Stage) proceed1.getScene().getWindow();
@@ -68,8 +65,7 @@ public class MeasuresController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
-    
+    }    
     @FXML
     public void backToMainMenuAction() throws IOException {
         GlobalContext.closeEndedOption = false;
@@ -79,6 +75,5 @@ public class MeasuresController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
-        
+    }        
 }

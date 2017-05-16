@@ -30,7 +30,7 @@
       <Label layoutX="125.0" layoutY="358.0" text="Lower Class Limit:" />
       <Label layoutX="285.0" layoutY="358.0" text="Upper Class Limit:" />
       <Label layoutX="445.0" layoutY="358.0" text="Frequency:" />
-      <Button fx:id="proceed" layoutX="348.0" layoutY="394.0" mnemonicParsing="false" onAction="#handleProceedAction" prefHeight="25.0" prefWidth="58.0" text="Add">
+      <Button fx:id="proceed" layoutX="348.0" layoutY="394.0" mnemonicParsing="false" onAction="#handleProceedAction" prefHeight="25.0" prefWidth="81.0" text="Add">
          <effect>
             <ColorAdjust hue="-0.79" saturation="0.36" />
          </effect>

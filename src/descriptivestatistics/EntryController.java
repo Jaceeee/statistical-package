@@ -53,7 +53,9 @@ public class EntryController implements Initializable {
             root = FXMLLoader.load(getClass().getResource("TitleTemplate.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.show();            
+            stage.show();
+            GlobalContext.groupedOption = false;
+            GlobalContext.ungroupedOption = false;
         } else{
             errorMessage.setText("Must select an option before proceeding");
         }
@@ -115,11 +117,11 @@ public class EntryController implements Initializable {
             stage.setScene(scene);
             stage.show();
         } else {
-            if(titleField.getText() == ""){
+            if(titleField.getText() == "") {
                 errorMessage.setText("Data must have title.");
-            } else if (!Validation.isNumeric(inputLimitField.getText())){
+            } else if (!Validation.isNumeric(inputLimitField.getText())) {
                 errorMessage.setText("Input must be an integer or not blank.");
-            } else if (Validation.checkLimit(Integer.parseInt(inputLimitField.getText()))){
+            } else if (!Validation.checkGroupedLimit(Integer.parseInt(inputLimitField.getText()))) {                
                 errorMessage.setText("Data set must contain at least 3 values.");
             }
         }   
@@ -186,15 +188,14 @@ public class EntryController implements Initializable {
     }
     
     @FXML
-    private void setGroupedChoice() {
+    private void setGroupedChoice() {        
         if(GlobalContext.groupedOption == false) {
             GlobalContext.groupedOption = true;
             GlobalContext.ungroupedOption = false;
         } else {
             GlobalContext.groupedOption = false;
         }
-    }
-    
+    }    
     @FXML
     private void setUngroupedChoice() {
         if(GlobalContext.ungroupedOption == false) {

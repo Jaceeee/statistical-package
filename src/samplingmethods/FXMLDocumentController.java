@@ -289,6 +289,7 @@ public class FXMLDocumentController implements Initializable {
                 for(int i = 0; i<GlobalContext.N; i++){                    
                     arrayForIndexes[i] = Integer.toString(i+1);
                 }                
+                populationList = FXCollections.observableArrayList(GlobalContext.arr);
                 if(GlobalContext.counter == GlobalContext.N){
                     enterInputButton.setVisible(false);
                     if(GlobalContext.methodChoice.equals("Stratified Sampling")) {                        
@@ -325,13 +326,13 @@ public class FXMLDocumentController implements Initializable {
                                 }
                             }                                                        
                         }                        
+                        Arrays.sort(arrCpy);
                         populationList = FXCollections.observableArrayList(arrCpy);
                     }
                     proceed2 = true;                    
                 }
-                System.out.println("Hello");                
-                populationList = FXCollections.observableArrayList(GlobalContext.arr);
-                ObservableList<String> indexes = FXCollections.observableArrayList(arrayForIndexes);
+                System.out.println("Hello");                                
+                ObservableList<String> indexes = FXCollections.observableArrayList(arrayForIndexes);                
                 samplingFrameListView.setItems(populationList);
                 indexFrameListView.setItems(indexes);
             }
@@ -404,7 +405,7 @@ public class FXMLDocumentController implements Initializable {
             }            
             if(pass){
                 errorMessage3.setVisible(false);
-                GlobalContext.doStratifiedSampling(inp);                
+                GlobalContext.doStratifiedSampling(inp);                                
                 ObservableList index = FXCollections.observableArrayList(GlobalContext.stratifiedIndexArray);
                 ObservableList sampleItems = FXCollections.observableArrayList(GlobalContext.sampleArray);
                 finalFrameIndexListView.setItems(index);

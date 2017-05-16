@@ -156,7 +156,7 @@ public class MainController implements Initializable {
         String text = datainput.getText();
         GlobalContext.f1 = false;
         
-        if(GlobalContext.counter == 0 && enter.isPressed()) {
+        if(GlobalContext.counter == 0 && !Validation.isString(text) && !Validation.isAlpha(text)) {
             Validation.setValidation(text);
             GlobalContext.f1 = GlobalContext.inputType < 5;            
         } else {
@@ -165,7 +165,6 @@ public class MainController implements Initializable {
         //adding a special character to terminate
         
         if(GlobalContext.f1) {
-
            GlobalContext.categoricalArray[GlobalContext.counter] = text;
            GlobalContext.counter++;
            GlobalContext.numberArray[GlobalContext.counter - 1] = GlobalContext.counter;
@@ -340,8 +339,8 @@ public class MainController implements Initializable {
                 outlabel.setText((GlobalContext.categoricalArray[GlobalContext.n / 2])
                 + "\n" + "Range: " + GlobalContext.getRange());
             } else {
-                int low = GlobalContext.n / 2;
-                int high = (GlobalContext.n / 2) + 1;
+                int low = (GlobalContext.n / 2) - 1;
+                int high = (GlobalContext.n / 2);
                 //float
                 outlabel.setText(String.valueOf((Float.parseFloat(GlobalContext.categoricalArray[low]) +
                         Float.parseFloat(GlobalContext.categoricalArray[high])) / 2)
@@ -369,13 +368,10 @@ public class MainController implements Initializable {
                     outlabel.setText(num + " modes - 'bimodal'");
                     inp += num + " modes - 'bimodal'";
                     break;
-                case 3:
+                default:
                     outlabel.setText(num + " modes - 'multimodal'");
                     inp += num + " modes - 'multimodal'";
-                    break;
-                default:                    
-                    System.out.println("hi! ni agi ka sa switch? diri ? ");
-                    break;
+                    break;                
             } 
         } 
         if(GlobalContext.f4){
